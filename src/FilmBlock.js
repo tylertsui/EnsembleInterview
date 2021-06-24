@@ -1,10 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const FilmBlock = ({title, index}) => {
+const FilmBlock = ({film}) => {
 
     return (
         <div>
-            <a key={title} onClick={e => {console.log(index)}}>{title}</a>
+            <Link className="link" to={{
+                pathname: "/details/",
+                state: {
+                    toDisplay: film,
+                },
+            }} key={film.episode_id}>{film.title}</Link>
         </div>
     )
 }

@@ -6,11 +6,18 @@ button {
     margin-left: 10px
 }
 
-a:hover {
+p,
+.link {
+    color: black;
+}
+
+p:hover,
+.link:hover {
     color: blue;
     font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
 }
+
 
 /*# sourceMappingURL=/src.9ad09f98.css.map */
