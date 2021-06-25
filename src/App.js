@@ -3,11 +3,13 @@ import { render } from "react-dom";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-import { film_endpoint } from "./String";
-import FilmBlock from "./FilmBlock";
+import { film_endpoint, film_link } from "./String";
 import FilmDetails from "./FilmDetails";
 import CharacterDetails from "./CharacterDetails";
-
+import WorldDetails from "./WorldDetails";
+import SpecieDetails from "./SpecieDetails";
+import VehicleDetails from "./VehicleDetails";
+import LinkBlock from "./LinkBlock";
 
 const App = () => {
     const [films, setFilms] = useState([{title: ""}]);
@@ -26,11 +28,13 @@ const App = () => {
                 </Link>
                 <Switch>
                     <Route path="/character/" children={<CharacterDetails />}/>
-                    <Route path="/details/" children={<FilmDetails />} /> 
-                    
+                    <Route path="/film/" children={<FilmDetails />} /> 
+                    <Route path="/world/" children={<WorldDetails />} />
+                    <Route path="/specie/" children={<SpecieDetails />} />
+                    <Route path="/vehicle/" children={<VehicleDetails />} />
                     <Route path="/">
-                        {films.map((film) => {
-                            return <FilmBlock film={film} />
+                        {films.map((film, index) => {
+                            return <LinkBlock key={index} data={film} path={film_link} name={film.title} />
                         })}
                     </Route>
                 </Switch>

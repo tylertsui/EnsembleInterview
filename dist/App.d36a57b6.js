@@ -35510,12 +35510,22 @@ if ("development" !== "production") {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.film_endpoint = exports.api_url = void 0;
+exports.vehicle_link = exports.specie_link = exports.world_link = exports.film_link = exports.character_link = exports.film_endpoint = exports.api_url = void 0;
 var api_url = "https://swapi.dev/api/";
 exports.api_url = api_url;
 var film_endpoint = "".concat(api_url, "films/");
 exports.film_endpoint = film_endpoint;
-},{}],"FilmBlock.js":[function(require,module,exports) {
+var character_link = "/character/";
+exports.character_link = character_link;
+var film_link = "/film/";
+exports.film_link = film_link;
+var world_link = "/world/";
+exports.world_link = world_link;
+var specie_link = "/specie/";
+exports.specie_link = specie_link;
+var vehicle_link = "/vehicle/";
+exports.vehicle_link = vehicle_link;
+},{}],"LinkBlock.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35529,51 +35539,22 @@ var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var FilmBlock = function FilmBlock(_ref) {
-  var film = _ref.film;
+var LinkBlock = function LinkBlock(_ref) {
+  var data = _ref.data,
+      path = _ref.path,
+      name = _ref.name;
   return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
     className: "link",
     to: {
-      pathname: "/details/",
+      pathname: path,
       state: {
-        toDisplay: film
+        toDisplay: data
       }
-    },
-    key: film.episode_id
-  }, film.title));
+    }
+  }, name));
 };
 
-var _default = FilmBlock;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"CharacterBlock.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var CharacterBlock = function CharacterBlock(_ref) {
-  var char = _ref.char;
-  return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
-    className: "link",
-    to: {
-      pathname: "/character/",
-      state: {
-        charDisplay: char
-      }
-    },
-    key: char.name
-  }, char.name));
-};
-
-var _default = CharacterBlock;
+var _default = LinkBlock;
 exports.default = _default;
 },{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"FilmDetails.js":[function(require,module,exports) {
 "use strict";
@@ -35589,7 +35570,9 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _reactRouter = require("react-router");
 
-var _CharacterBlock = _interopRequireDefault(require("./CharacterBlock"));
+var _String = require("./String");
+
+var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35610,12 +35593,20 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var FilmDetails = function FilmDetails() {
-  var _useState = (0, _react.useState)([{
-    name: ""
-  }]),
+  var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       name = _useState2[0],
       setName = _useState2[1];
+
+  var _useState3 = (0, _react.useState)([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      planets = _useState4[0],
+      setPlanets = _useState4[1];
+
+  var _useState5 = (0, _react.useState)([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      species = _useState6[0],
+      setSpecies = _useState6[1];
 
   var location = (0, _reactRouter.useLocation)();
   var toDisplay = location.state.toDisplay;
@@ -35624,23 +35615,59 @@ var FilmDetails = function FilmDetails() {
     var character = film.characters.map(function (char) {
       return _axios.default.get(char);
     });
+    var worlds = film.planets.map(function (planet) {
+      return _axios.default.get(planet);
+    });
+    var races = film.species.map(function (specie) {
+      return _axios.default.get(specie);
+    });
 
     _axios.default.all(character).then(function (result) {
       setName(result.map(function (char) {
         return char.data;
       }));
     });
-  }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Title: ", film.title), _react.default.createElement("div", null, "Episode: ", film.episode_id), _react.default.createElement("div", null, "Opening Crawl:", _react.default.createElement("br", null), film.opening_crawl), _react.default.createElement("div", null, "Director: ", film.director), _react.default.createElement("div", null, "Producer: ", film.producer), _react.default.createElement("div", null, "Release Date: ", film.release_date), _react.default.createElement("div", null, "Character:", _react.default.createElement("br", null), name.map(function (char) {
-    return _react.default.createElement(_CharacterBlock.default, {
-      char: char
+
+    _axios.default.all(worlds).then(function (result) {
+      setPlanets(result.map(function (planet) {
+        return planet.data;
+      }));
     });
-  })));
+
+    _axios.default.all(races).then(function (result) {
+      setSpecies(result.map(function (specie) {
+        return specie.data;
+      }));
+    });
+  }, []);
+  console.log(species);
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Title: ", film.title), _react.default.createElement("div", null, "Episode: ", film.episode_id), _react.default.createElement("div", null, "Opening Crawl:", _react.default.createElement("br", null), film.opening_crawl), _react.default.createElement("div", null, "Director: ", film.director), _react.default.createElement("div", null, "Producer: ", film.producer), _react.default.createElement("div", null, "Release Date: ", film.release_date), _react.default.createElement("div", null, "Character:", _react.default.createElement("br", null), name.length > 0 ? name.map(function (char, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: char,
+      path: _String.character_link,
+      name: char.name
+    });
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Featured Planets: ", planets.length > 0 ? planets.map(function (planet, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: planet,
+      path: _String.world_link,
+      name: planet.name
+    });
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Featured Species: ", species.length > 0 ? species.map(function (specie, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: specie,
+      path: _String.specie_link,
+      name: specie.name
+    });
+  }) : _react.default.createElement("div", null, "NA")));
 };
 
 var _default = FilmDetails;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./CharacterBlock":"CharacterBlock.js"}],"CharacterDetails.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"CharacterDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35654,7 +35681,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouter = require("react-router");
 
-var _FilmBlock = _interopRequireDefault(require("./FilmBlock"));
+var _String = require("./String");
+
+var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -35676,34 +35705,320 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var CharacterDetails = function CharacterDetails() {
   var location = (0, _reactRouter.useLocation)();
-  var charDisplay = location.state.charDisplay;
+  var toDisplay = location.state.toDisplay;
+  var character = toDisplay;
+
+  var _useState = (0, _react.useState)([{
+    name: ""
+  }]),
+      _useState2 = _slicedToArray(_useState, 2),
+      films = _useState2[0],
+      setFilms = _useState2[1];
+
+  var _useState3 = (0, _react.useState)([{
+    name: ""
+  }]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      homeworld = _useState4[0],
+      setHomeword = _useState4[1];
+
+  var _useState5 = (0, _react.useState)([{
+    name: ""
+  }]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      species = _useState6[0],
+      setSpecies = _useState6[1];
+
+  var _useState7 = (0, _react.useState)([{
+    name: ""
+  }]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      vehicles = _useState8[0],
+      setVehicles = _useState8[1];
+
+  (0, _react.useEffect)(function () {
+    var filmPromises = character.films.map(function (film) {
+      return _axios.default.get(film);
+    });
+    var speciePromises = character.species.map(function (specie) {
+      return _axios.default.get(specie);
+    });
+    var vehiclePromises = character.vehicles.map(function (vehicle) {
+      return _axios.default.get(vehicle);
+    });
+
+    _axios.default.all(filmPromises).then(function (result) {
+      setFilms(result.map(function (film) {
+        return film.data;
+      }));
+    });
+
+    _axios.default.all(speciePromises).then(function (result) {
+      setSpecies(result.map(function (specie) {
+        return specie.data;
+      }));
+    });
+
+    _axios.default.all(vehiclePromises).then(function (result) {
+      setVehicles(result.map(function (vehicle) {
+        return vehicle.data;
+      }));
+    });
+
+    _axios.default.get(character.homeworld).then(function (result) {
+      setHomeword(result.data);
+    });
+  }, []);
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", character.name), _react.default.createElement("div", null, "Birth Date: ", character.birth_year), _react.default.createElement("div", null, "Eye Color: ", character.eye_color), _react.default.createElement("div", null, "Gender: ", character.gender), _react.default.createElement("div", null, "Hair Colour: ", character.hair_color), _react.default.createElement("div", null, "Mass: ", character.mass), _react.default.createElement("div", null, "Skin Color: ", character.skin_color), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: film,
+      path: _String.film_link,
+      name: film.title
+    });
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Home World: ", _react.default.createElement(_LinkBlock.default, {
+    data: homeworld,
+    path: _String.world_link,
+    name: homeworld.name
+  })), _react.default.createElement("div", null, "Species: ", species.length > 0 ? species.map(function (specie, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: specie,
+      path: _String.specie_link,
+      name: specie.name
+    });
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Vehicles Driven: ", vehicles.length > 0 ? vehicles.map(function (vehicle, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: vehicle,
+      path: _String.vehicle_link,
+      name: vehicle.name
+    });
+  }) : _react.default.createElement("div", null, "NA")));
+};
+
+var _default = CharacterDetails;
+exports.default = _default;
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"WorldDetails.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouter = require("react-router");
+
+var _String = require("./String");
+
+var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var WorldDetails = function WorldDetails() {
+  var location = (0, _reactRouter.useLocation)();
+  var toDisplay = location.state.toDisplay;
+  var world = toDisplay;
+
+  var _useState = (0, _react.useState)([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      residents = _useState2[0],
+      setResidents = _useState2[1];
+
+  var _useState3 = (0, _react.useState)([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      films = _useState4[0],
+      setFilms = _useState4[1];
+
+  (0, _react.useEffect)(function () {
+    var worldPromises = world.residents.map(function (resident) {
+      return _axios.default.get(resident);
+    });
+    var filmPromises = world.films.map(function (film) {
+      return _axios.default.get(film);
+    });
+
+    _axios.default.all(worldPromises).then(function (results) {
+      setResidents(results.map(function (resident) {
+        return resident.data;
+      }));
+    });
+
+    _axios.default.all(filmPromises).then(function (results) {
+      setFilms(results.map(function (film) {
+        return film.data;
+      }));
+    });
+  }, []);
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Planet: ", world.name), _react.default.createElement("div", null, "Climate: ", world.climate), _react.default.createElement("div", null, "Diameter: ", world.diameter), _react.default.createElement("div", null, "Rotation Period: ", world.rotation_period), _react.default.createElement("div", null, "Orbital Period: ", world.orbital_period), _react.default.createElement("div", null, "Terrain: ", world.terrain), _react.default.createElement("div", null, "Surface Water: ", world.surface_water), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: film,
+      path: _String.film_link,
+      name: film.title
+    });
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Population: ", world.population), _react.default.createElement("div", null, "Residents: ", residents.length > 0 ? residents.map(function (resident, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: resident,
+      path: _String.character_link,
+      name: resident.name
+    });
+  }) : _react.default.createElement("div", null, "NA")));
+};
+
+var _default = WorldDetails;
+exports.default = _default;
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"SpecieDetails.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouter = require("react-router");
+
+var _String = require("./String");
+
+var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var SpecieDetails = function SpecieDetails() {
+  var location = (0, _reactRouter.useLocation)();
+  var toDisplay = location.state.toDisplay;
+  var specie = toDisplay;
 
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       films = _useState2[0],
       setFilms = _useState2[1];
 
+  var _useState3 = (0, _react.useState)([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      characters = _useState4[0],
+      setCharacters = _useState4[1];
+
+  var _useState5 = (0, _react.useState)([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      homeworld = _useState6[0],
+      setHomeworld = _useState6[1];
+
   (0, _react.useEffect)(function () {
-    var appearances = charDisplay.films.map(function (film) {
+    var filmPromises = specie.films.map(function (film) {
       return _axios.default.get(film);
     });
+    var characterPromises = specie.people.map(function (character) {
+      return _axios.default.get(character);
+    });
 
-    _axios.default.all(appearances).then(function (result) {
+    _axios.default.all(filmPromises).then(function (result) {
       setFilms(result.map(function (film) {
         return film.data;
       }));
     });
-  }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", charDisplay.name), _react.default.createElement("div", null, "Birth Date: ", charDisplay.birth_year), _react.default.createElement("div", null, "Eye Color: ", charDisplay.eye_color), _react.default.createElement("div", null, "Gender: ", charDisplay.gender), _react.default.createElement("div", null, "Hair Colour: ", charDisplay.hair_color), _react.default.createElement("div", null, "Film Appearances: ", films.map(function (film) {
-    return _react.default.createElement(_FilmBlock.default, {
-      film: film
+
+    _axios.default.all(characterPromises).then(function (result) {
+      setCharacters(result.map(function (character) {
+        return character.data;
+      }));
     });
-  })));
+
+    _axios.default.get(specie.homeworld).then(function (result) {
+      setHomeworld(result.data);
+    });
+  }, []);
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Specie: ", specie.name), _react.default.createElement("div", null, "Average Height: ", specie.average_height), _react.default.createElement("div", null, "Average Lifespan: ", specie.average_lifespan), _react.default.createElement("div", null, "Classification: ", specie.classifcation), _react.default.createElement("div", null, "Designation: ", specie.designation), _react.default.createElement("div", null, "Possible Eye Colours: ", specie.eye_colors), _react.default.createElement("div", null, "Possible Skin Colours: ", specie.skin_colors), _react.default.createElement("div", null, "Language: ", specie.language), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: film,
+      path: _String.film_link,
+      name: film.title
+    });
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Home World: ", _react.default.createElement(_LinkBlock.default, {
+    data: homeworld,
+    path: _String.world_link,
+    name: homeworld.name
+  })), _react.default.createElement("div", null, "Members of Species: ", characters.length > 0 ? characters.map(function (char, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: char,
+      path: _String.character_link,
+      name: char.name
+    });
+  }) : _react.default.createElement("div", null, "NA")));
 };
 
-var _default = CharacterDetails;
+var _default = SpecieDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./FilmBlock":"FilmBlock.js"}],"App.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"VehicleDetails.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouter = require("react-router");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var VehicleDetails = function VehicleDetails() {
+  return _react.default.createElement("h1", null, "HI");
+};
+
+var _default = VehicleDetails;
+exports.default = _default;
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -35716,11 +36031,17 @@ var _reactRouterDom = require("react-router-dom");
 
 var _String = require("./String");
 
-var _FilmBlock = _interopRequireDefault(require("./FilmBlock"));
-
 var _FilmDetails = _interopRequireDefault(require("./FilmDetails"));
 
 var _CharacterDetails = _interopRequireDefault(require("./CharacterDetails"));
+
+var _WorldDetails = _interopRequireDefault(require("./WorldDetails"));
+
+var _SpecieDetails = _interopRequireDefault(require("./SpecieDetails"));
+
+var _VehicleDetails = _interopRequireDefault(require("./VehicleDetails"));
+
+var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35759,19 +36080,31 @@ var App = function App() {
     path: "/character/",
     children: _react.default.createElement(_CharacterDetails.default, null)
   }), _react.default.createElement(_reactRouterDom.Route, {
-    path: "/details/",
+    path: "/film/",
     children: _react.default.createElement(_FilmDetails.default, null)
   }), _react.default.createElement(_reactRouterDom.Route, {
+    path: "/world/",
+    children: _react.default.createElement(_WorldDetails.default, null)
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    path: "/specie/",
+    children: _react.default.createElement(_SpecieDetails.default, null)
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    path: "/vehicle/",
+    children: _react.default.createElement(_VehicleDetails.default, null)
+  }), _react.default.createElement(_reactRouterDom.Route, {
     path: "/"
-  }, films.map(function (film) {
-    return _react.default.createElement(_FilmBlock.default, {
-      film: film
+  }, films.map(function (film, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: film,
+      path: _String.film_link,
+      name: film.title
     });
   })))));
 };
 
 (0, _reactDom.render)(_react.default.createElement(App, null), document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./String":"String.js","./FilmBlock":"FilmBlock.js","./FilmDetails":"FilmDetails.js","./CharacterDetails":"CharacterDetails.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./String":"String.js","./FilmDetails":"FilmDetails.js","./CharacterDetails":"CharacterDetails.js","./WorldDetails":"WorldDetails.js","./SpecieDetails":"SpecieDetails.js","./VehicleDetails":"VehicleDetails.js","./LinkBlock":"LinkBlock.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -35799,7 +36132,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56808" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62008" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

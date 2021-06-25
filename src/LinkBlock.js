@@ -1,18 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const FilmBlock = ({film}) => {
+const LinkBlock = ({data, path, name}) => {
 
     return (
         <div>
             <Link className="link" to={{
-                pathname: "/details/",
+                pathname: path,
                 state: {
-                    toDisplay: film,
+                    toDisplay: data,
                 },
-            }} key={film.episode_id}>{film.title}</Link>
+            }}>{name}</Link>
         </div>
     )
 }
 
-export default FilmBlock;
+export default LinkBlock;
