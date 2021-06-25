@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
-import { film_link, world_link, specie_link, vehicle_link } from "./String";
+import { film_link, world_link, specie_link, vehicle_link, starship_link } from "./String";
 import LinkBlock from "./LinkBlock";
 
 const CharacterDetails = () => {
@@ -11,10 +11,11 @@ const CharacterDetails = () => {
     const { toDisplay } = location.state;
     const character = toDisplay;
 
-    const [films, setFilms] = useState([{name: ""}]);
-    const [homeworld, setHomeword] = useState([{name: ""}]);
-    const [species, setSpecies] = useState([{name: ""}]);
-    const [vehicles, setVehicles] = useState([{name: ""}]);
+    const [films, setFilms] = useState([]);
+    const [homeworld, setHomeword] = useState([]);
+    const [species, setSpecies] = useState([]);
+    const [vehicles, setVehicles] = useState([]);
+    const [starships, setStarships] = useState([]);
 
     useEffect(() => {
         let filmPromises = character.films.map((film) => {
@@ -27,6 +28,10 @@ const CharacterDetails = () => {
 
         let vehiclePromises = character.vehicles.map((vehicle) => {
             return axios.get(vehicle);
+        });
+
+        let starshipPromises = character.starships.map((starship) => {
+            return axios.get(starship);
         });
 
         axios.all(filmPromises).then((result) => {
@@ -44,6 +49,12 @@ const CharacterDetails = () => {
         axios.all(vehiclePromises).then((result) => {
             setVehicles(result.map((vehicle) => {
                 return vehicle.data;
+            }));
+        });
+
+        axios.all(starshipPromises).then((result) => {
+            setStarships(result.map((starship) => {
+                return starship.data;
             }));
         });
 
@@ -91,9 +102,15 @@ const CharacterDetails = () => {
                     })) : <div>NA</div>}
             </div>
             <div>
-                Vehicles Driven: {
+                Vehicles Piloted: {
                     vehicles.length > 0 ? (vehicles.map((vehicle, index) => {
                         return <LinkBlock key={index} data={vehicle} path={vehicle_link} name={vehicle.name} />
+                    })) : <div>NA</div>}
+            </div>
+            <div>
+                Starships Piloted: {
+                    starships.length > 0 ? (starships.map((starship, index) => {
+                        return <LinkBlock key={index} data={starship} path={starship_link} name={starship.name} />
                     })) : <div>NA</div>}
             </div>
         </div>

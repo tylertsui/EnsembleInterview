@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { render } from "react-dom";
-import axios from "axios";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-import { film_endpoint, film_link } from "./String";
+import { film_link, character_link, world_link, specie_link,vehicle_link, starship_link, film_character_link, home_link } from "./String";
 import FilmDetails from "./FilmDetails";
 import CharacterDetails from "./CharacterDetails";
 import WorldDetails from "./WorldDetails";
 import SpecieDetails from "./SpecieDetails";
 import VehicleDetails from "./VehicleDetails";
-import LinkBlock from "./LinkBlock";
+import StarshipDetails from "./StarshipDetails";
+import FilmCharacters from "./FilmCharacters";
+import FilmDisplay from "./FilmDisplay";
 
 const App = () => {
-    const [films, setFilms] = useState([{title: ""}]);
-
-    useEffect(() => {
-        axios.get(`${film_endpoint}`).then((e) => {
-            setFilms(e.data.results);
-        });
-    }, []);
 
     return (
         <div>
@@ -27,16 +21,14 @@ const App = () => {
                     <p>Star Wars!</p>
                 </Link>
                 <Switch>
-                    <Route path="/character/" children={<CharacterDetails />}/>
-                    <Route path="/film/" children={<FilmDetails />} /> 
-                    <Route path="/world/" children={<WorldDetails />} />
-                    <Route path="/specie/" children={<SpecieDetails />} />
-                    <Route path="/vehicle/" children={<VehicleDetails />} />
-                    <Route path="/">
-                        {films.map((film, index) => {
-                            return <LinkBlock key={index} data={film} path={film_link} name={film.title} />
-                        })}
-                    </Route>
+                    <Route path={film_character_link} children={<FilmCharacters />} />
+                    <Route path={character_link} children={<CharacterDetails />}/> 
+                    <Route path={film_link}children={<FilmDetails />} /> 
+                    <Route path={world_link} children={<WorldDetails />} />
+                    <Route path={specie_link} children={<SpecieDetails />} />
+                    <Route path={vehicle_link} children={<VehicleDetails />} />
+                    <Route path={starship_link} children={<StarshipDetails />} />
+                    <Route path={home_link} children={<FilmDisplay />} />
                 </Switch>
             </Router>
         </div>
