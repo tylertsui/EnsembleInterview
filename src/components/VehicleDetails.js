@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
 import { film_link, character_link } from "../strings/String";
-import LinkBlock from "../common/LinkBlock";
+import FilmBlockList from "../common/FilmBlockList";
 import LinkBlockList from "../common/LinkBlockList";
 
 const VehicleDetails = () => {
@@ -67,17 +67,10 @@ const VehicleDetails = () => {
                 Max Atmosphering Speed: {vehicle.max_atmosphering_speed}
             </div>
             <div>
-                Known Pilots : <LinkBlockList dataList={pilots} path={character_link} />
-                {/* {
-                    pilots.length > 0 ? (pilots.map((pilot, index) => {
-                        return <LinkBlock key={index} data={pilot} path={character_link} name={pilot.name} />
-                    })) : <div>NA</div>} */}
+                <h5>Known Pilots:</h5> <LinkBlockList dataList={pilots} path={character_link} />
             </div>
             <div>
-                Film Appearances: {
-                    films.length > 0 ? (films.map((film, index) => {
-                        return <LinkBlock key={index} data={film} path={film_link} name={film.title} />
-                    })) : <div>NA</div>}
+                <h5>Film Appearances:</h5> <FilmBlockList data={films} path={film_link} />
             </div>
         </div>
     )

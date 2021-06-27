@@ -35579,7 +35579,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var LinkBlockList = function LinkBlockList(_ref) {
   var dataList = _ref.dataList,
       path = _ref.path;
-  return dataList == "loading" ? _react.default.createElement("h6", null, "Loading") : dataList.length > 0 ? dataList.map(function (data, index) {
+  return dataList.length > 0 ? dataList.map(function (data, index) {
     return _react.default.createElement(_LinkBlock.default, {
       key: index,
       data: data,
@@ -35717,7 +35717,36 @@ var FilmDetails = function FilmDetails() {
 
 var _default = FilmDetails;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/CharacterDetails.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"common/FilmBlockList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FilmBlockList = function FilmBlockList(_ref) {
+  var dataList = _ref.dataList,
+      path = _ref.path;
+  return dataList.length > 0 ? dataList.map(function (data, index) {
+    return _react.default.createElement(_LinkBlock.default, {
+      key: index,
+      data: data,
+      path: path,
+      name: data.title
+    });
+  }) : _react.default.createElement("div", null, "NA");
+};
+
+var _default = FilmBlockList;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./LinkBlock":"common/LinkBlock.js"}],"components/CharacterDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35733,7 +35762,7 @@ var _reactRouter = require("react-router");
 
 var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+var _FilmBlockList = _interopRequireDefault(require("../common/FilmBlockList"));
 
 var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
@@ -35827,14 +35856,10 @@ var CharacterDetails = function CharacterDetails() {
       setHomeword(result.data);
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", character.name), _react.default.createElement("div", null, "Birth Date: ", character.birth_year), _react.default.createElement("div", null, "Eye Color: ", character.eye_color), _react.default.createElement("div", null, "Gender: ", character.gender), _react.default.createElement("div", null, "Hair Colour: ", character.hair_color), _react.default.createElement("div", null, "Mass: ", character.mass), _react.default.createElement("div", null, "Skin Color: ", character.skin_color), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), films.length > 0 ? films.map(function (film, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: film,
-      path: _String.film_link,
-      name: film.title
-    });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World: "), " ", _react.default.createElement(_LinkBlock.default, {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", character.name), _react.default.createElement("div", null, "Birth Date: ", character.birth_year), _react.default.createElement("div", null, "Eye Color: ", character.eye_color), _react.default.createElement("div", null, "Gender: ", character.gender), _react.default.createElement("div", null, "Hair Colour: ", character.hair_color), _react.default.createElement("div", null, "Mass: ", character.mass), _react.default.createElement("div", null, "Skin Color: ", character.skin_color), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", _react.default.createElement(_FilmBlockList.default, {
+    dataList: films,
+    path: _String.film_link
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World: "), " ", _react.default.createElement(LinkBlock, {
     data: homeworld,
     path: _String.world_link,
     name: homeworld.name
@@ -35852,7 +35877,7 @@ var CharacterDetails = function CharacterDetails() {
 
 var _default = CharacterDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/WorldDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/FilmBlockList":"common/FilmBlockList.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/WorldDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35868,7 +35893,7 @@ var _reactRouter = require("react-router");
 
 var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+var _FilmBlockList = _interopRequireDefault(require("../common/FilmBlockList"));
 
 var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
@@ -35925,14 +35950,10 @@ var WorldDetails = function WorldDetails() {
       }));
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Planet: ", world.name), _react.default.createElement("div", null, "Climate: ", world.climate), _react.default.createElement("div", null, "Diameter: ", world.diameter), _react.default.createElement("div", null, "Rotation Period: ", world.rotation_period), _react.default.createElement("div", null, "Orbital Period: ", world.orbital_period), _react.default.createElement("div", null, "Terrain: ", world.terrain), _react.default.createElement("div", null, "Surface Water: ", world.surface_water), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.length > 0 ? films.map(function (film, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: film,
-      path: _String.film_link,
-      name: film.title
-    });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Population: ", world.population), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Residents:"), " ", _react.default.createElement(_LinkBlockList.default, {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Planet: ", world.name), _react.default.createElement("div", null, "Climate: ", world.climate), _react.default.createElement("div", null, "Diameter: ", world.diameter), _react.default.createElement("div", null, "Rotation Period: ", world.rotation_period), _react.default.createElement("div", null, "Orbital Period: ", world.orbital_period), _react.default.createElement("div", null, "Terrain: ", world.terrain), _react.default.createElement("div", null, "Surface Water: ", world.surface_water), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", _react.default.createElement(_FilmBlockList.default, {
+    data: films,
+    path: _String.film_link
+  })), _react.default.createElement("div", null, "Population: ", world.population), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Residents:"), " ", _react.default.createElement(_LinkBlockList.default, {
     dataList: residents,
     path: _String.character_link
   })));
@@ -35940,7 +35961,7 @@ var WorldDetails = function WorldDetails() {
 
 var _default = WorldDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/SpecieDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/FilmBlockList":"common/FilmBlockList.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/SpecieDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35956,7 +35977,7 @@ var _reactRouter = require("react-router");
 
 var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+var _FilmBlockList = _interopRequireDefault(require("../common/FilmBlockList"));
 
 var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
@@ -36022,14 +36043,10 @@ var SpecieDetails = function SpecieDetails() {
       setHomeworld(result.data);
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Specie: ", specie.name), _react.default.createElement("div", null, "Average Height: ", specie.average_height), _react.default.createElement("div", null, "Average Lifespan: ", specie.average_lifespan), _react.default.createElement("div", null, "Classification: ", specie.classifcation), _react.default.createElement("div", null, "Designation: ", specie.designation), _react.default.createElement("div", null, "Possible Eye Colours: ", specie.eye_colors), _react.default.createElement("div", null, "Possible Skin Colours: ", specie.skin_colors), _react.default.createElement("div", null, "Language: ", specie.language), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances: "), films.length > 0 ? films.map(function (film, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: film,
-      path: _String.film_link,
-      name: film.title
-    });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World:"), " ", _react.default.createElement(_LinkBlock.default, {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Specie: ", specie.name), _react.default.createElement("div", null, "Average Height: ", specie.average_height), _react.default.createElement("div", null, "Average Lifespan: ", specie.average_lifespan), _react.default.createElement("div", null, "Classification: ", specie.classifcation), _react.default.createElement("div", null, "Designation: ", specie.designation), _react.default.createElement("div", null, "Possible Eye Colours: ", specie.eye_colors), _react.default.createElement("div", null, "Possible Skin Colours: ", specie.skin_colors), _react.default.createElement("div", null, "Language: ", specie.language), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances: "), " ", _react.default.createElement(_FilmBlockList.default, {
+    data: films,
+    path: _String.film_link
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World:"), " ", _react.default.createElement(LinkBlock, {
     data: homeworld,
     path: _String.world_link,
     name: homeworld.name
@@ -36041,7 +36058,7 @@ var SpecieDetails = function SpecieDetails() {
 
 var _default = SpecieDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/VehicleDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/FilmBlockList":"common/FilmBlockList.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/VehicleDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36057,7 +36074,7 @@ var _reactRouter = require("react-router");
 
 var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+var _FilmBlockList = _interopRequireDefault(require("../common/FilmBlockList"));
 
 var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
@@ -36114,22 +36131,18 @@ var VehicleDetails = function VehicleDetails() {
       }));
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", vehicle.name), _react.default.createElement("div", null, "Class: ", vehicle.vehicle_class), _react.default.createElement("div", null, "Model: ", vehicle.model), _react.default.createElement("div", null, "Passengers: ", vehicle.passengers), _react.default.createElement("div", null, "Cargo Capacity: ", vehicle.cargo_capacity), _react.default.createElement("div", null, "Crew: ", vehicle.crew), _react.default.createElement("div", null, "Cost In Credits: ", vehicle.cost_in_credits), _react.default.createElement("div", null, "Manufacturer: ", vehicle.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", vehicle.max_atmosphering_speed), _react.default.createElement("div", null, "Known Pilots : ", _react.default.createElement(_LinkBlockList.default, {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", vehicle.name), _react.default.createElement("div", null, "Class: ", vehicle.vehicle_class), _react.default.createElement("div", null, "Model: ", vehicle.model), _react.default.createElement("div", null, "Passengers: ", vehicle.passengers), _react.default.createElement("div", null, "Cargo Capacity: ", vehicle.cargo_capacity), _react.default.createElement("div", null, "Crew: ", vehicle.crew), _react.default.createElement("div", null, "Cost In Credits: ", vehicle.cost_in_credits), _react.default.createElement("div", null, "Manufacturer: ", vehicle.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", vehicle.max_atmosphering_speed), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Known Pilots:"), " ", _react.default.createElement(_LinkBlockList.default, {
     dataList: pilots,
     path: _String.character_link
-  })), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: film,
-      path: _String.film_link,
-      name: film.title
-    });
-  }) : _react.default.createElement("div", null, "NA")));
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", _react.default.createElement(_FilmBlockList.default, {
+    data: films,
+    path: _String.film_link
+  })));
 };
 
 var _default = VehicleDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/StarshipDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/FilmBlockList":"common/FilmBlockList.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/StarshipDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36145,7 +36158,7 @@ var _reactRouter = require("react-router");
 
 var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+var _FilmBlockList = _interopRequireDefault(require("../common/FilmBlockList"));
 
 var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
@@ -36205,19 +36218,15 @@ var StarshipDetails = function StarshipDetails() {
   return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", starship.name), _react.default.createElement("div", null, "Model: ", starship.model), _react.default.createElement("div", null, "Class: ", starship.starship_class), _react.default.createElement("div", null, "Crew: ", starship.crew), _react.default.createElement("div", null, "Cargo Capacity:", starship.cargo_capacity), _react.default.createElement("div", null, "Manufacturer: ", starship.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", starship.max_atmoshpering_speed), _react.default.createElement("div", null, "Length: ", starship.length), _react.default.createElement("div", null, "Passengers: ", starship.passengers), _react.default.createElement("div", null, "Cost in Credits: ", starship.cost_in_credits), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Known Pilots:"), " ", _react.default.createElement(_LinkBlockList.default, {
     dataList: pilots,
     path: _String.character_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.length > 0 ? films.map(function (film, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: film,
-      path: _String.film_link,
-      name: film.title
-    });
-  }) : _react.default.createElement("div", null, "NA")));
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", _react.default.createElement(_FilmBlockList.default, {
+    data: films,
+    path: _String.film_link
+  })));
 };
 
 var _default = StarshipDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/FilmCharacters.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/FilmBlockList":"common/FilmBlockList.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/FilmCharacters.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36452,7 +36461,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55332" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49698" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

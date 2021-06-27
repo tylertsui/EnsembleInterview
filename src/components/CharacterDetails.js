@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
 import { film_link, world_link, specie_link, vehicle_link, starship_link } from "../strings/String";
-import LinkBlock from "../common/LinkBlock";
+import FilmBlockList from "../common/FilmBlockList";
 import LinkBlockList from "../common/LinkBlockList";
 
 const CharacterDetails = () => {
@@ -89,10 +89,7 @@ const CharacterDetails = () => {
                 Skin Color: {character.skin_color}
             </div>
             <div>
-                <h5>Film Appearances:</h5>
-                {films.length > 0 ? (films.map((film, index) => {
-                    return <LinkBlock key={index} data={film} path={film_link} name={film.title} />
-                })) : <div>NA</div>}
+                <h5>Film Appearances:</h5> <FilmBlockList dataList={films} path={film_link} />
             </div>
             <div>
                 <h5>Home World: </h5> <LinkBlock data={homeworld} path={world_link} name={homeworld.name} />
