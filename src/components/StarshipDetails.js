@@ -73,7 +73,7 @@ const StarshipDetails = () => {
                 <h5>Known Pilots:</h5> <LinkBlockList dataList={pilots} path={character_link} />
             </div>
             <div>
-                <h5>Film Appearances:</h5> <FilmBlockList data={films} path={film_link} />
+                <h5>Film Appearances:</h5> <FilmBlockList dataList={films} />
             </div>
         </div>
     )

@@ -61,7 +61,7 @@ const WorldDetails = () => {
                 Surface Water: {world.surface_water}
             </div>
             <div>
-                <h5>Film Appearances:</h5> <FilmBlockList data={films} path={film_link} />
+                <h5>Film Appearances:</h5> <FilmBlockList dataList={films} />
             </div>
             <div>
                 Population: {world.population}
