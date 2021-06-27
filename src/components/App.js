@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-import { film_link, character_link, world_link, specie_link,vehicle_link, starship_link, film_character_link, home_link } from "./String";
+import { film_link, character_link, world_link, specie_link,vehicle_link, starship_link, film_character_link, home_link } from "../strings/String";
 import FilmDetails from "./FilmDetails";
 import CharacterDetails from "./CharacterDetails";
 import WorldDetails from "./WorldDetails";

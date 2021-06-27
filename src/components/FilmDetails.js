@@ -3,12 +3,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 
-import { character_link, specie_link, world_link, vehicle_link, starship_link, film_character_link } from "./String";
-import LinkBlock from "./LinkBlock";
+import { specie_link, world_link, vehicle_link, starship_link, film_character_link } from "../strings/String";
+import LinkBlockList from "../common/LinkBlockList";
 
 const FilmDetails = () => {
 
-    // const [name, setName] = useState([]);
     const [planets, setPlanets] = useState([]);
     const [species, setSpecies] = useState([]);
     const [vehicles, setVehicles] = useState([]);
@@ -19,9 +18,6 @@ const FilmDetails = () => {
     const film = toDisplay;
 
     useEffect(() => {
-        // let characterPromises = film.characters.map((char) => {
-        //     return axios.get(char);
-        // });
 
         let worldPromises = film.planets.map((planet) => {
             return axios.get(planet);
@@ -38,12 +34,6 @@ const FilmDetails = () => {
         let starshipPromises = film.starships.map((starship) => {
             return axios.get(starship);
         });
-
-        // axios.all(characterPromises).then((result) => {
-        //     setName(result.map((char) => {
-        //         return char.data;
-        //     }));
-        // });
 
         axios.all(worldPromises).then((result) => {
             setPlanets(result.map((planet) => {
@@ -92,45 +82,26 @@ const FilmDetails = () => {
             <div>
                 Release Date: {film.release_date}
             </div>
-            {/* <div>
-                Character:
-                <br />
-                {name.length > 0 ? (name.map((char, index) => {
-                    return <LinkBlock key={index} data={char} path={character_link} name={char.name} />
-                })) : <div>NA</div>}
-            </div> */}
             <div>
-                <Link className="link" to={{
+                <h5><Link className="link" to={{
                     pathname: film_character_link,
                     state: {
                         characters: film.characters, 
                         title: film.title,
                     }
-                }}>Characters Features in {film.title}</Link>
+                }}>Characters Features in {film.title}</Link></h5>
             </div>
             <div>
-                Featured Planets: {
-                    planets.length > 0 ? (planets.map((planet, index) => {
-                        return <LinkBlock key={index} data={planet} path={world_link} name={planet.name} />
-                    })) : <div>NA</div>}
+                <h5>Featured Planets: </h5> <LinkBlockList dataList={planets} path={world_link}/> 
             </div>
             <div>
-                Featured Species: {
-                    species.length > 0 ? (species.map((specie, index) => {
-                        return <LinkBlock key={index} data={specie} path={specie_link} name={specie.name} />
-                    })) : <div>NA</div>}
+                <h5>Featured Species:</h5> <LinkBlockList dataList={species} path={specie_link} />
             </div>
             <div>
-                Vehicles Featured: {
-                    vehicles.length > 0 ? (vehicles.map((vehicle, index) => {
-                        return <LinkBlock key={index} data={vehicle} path={vehicle_link} name={vehicle.name} />
-                    })) : <div>NA</div>}
+                <h5>Vehicles Featured:</h5> <LinkBlockList dataList={vehicles} path={vehicle_link} />
             </div>
             <div>
-                Starships Featured: {
-                    starships.length > 0 ? (starships.map((starship, index) => {
-                        return <LinkBlock key={index} data={starship} path={starship_link} name={starship.name} />
-                    })) : <div>NA</div>}
+                <h5>Starships Featured:</h5> <LinkBlockList dataList={starships} path={starship_link} />
             </div>
         </div>
     )

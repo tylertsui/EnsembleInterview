@@ -33704,7 +33704,7 @@ if ("development" !== "production") {
     style: _propTypes.default.object
   });
 }
-},{"react-router":"../node_modules/react-router/esm/react-router.js","@babel/runtime/helpers/esm/inheritsLoose":"../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../node_modules/react/index.js","history":"../node_modules/history/esm/history.js","prop-types":"../node_modules/prop-types/index.js","tiny-warning":"../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"String.js":[function(require,module,exports) {
+},{"react-router":"../node_modules/react-router/esm/react-router.js","@babel/runtime/helpers/esm/inheritsLoose":"../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../node_modules/react/index.js","history":"../node_modules/history/esm/history.js","prop-types":"../node_modules/prop-types/index.js","tiny-warning":"../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"strings/String.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35531,7 +35531,7 @@ module.exports.default = axios;
 
 },{"./utils":"../node_modules/axios/lib/utils.js","./helpers/bind":"../node_modules/axios/lib/helpers/bind.js","./core/Axios":"../node_modules/axios/lib/core/Axios.js","./core/mergeConfig":"../node_modules/axios/lib/core/mergeConfig.js","./defaults":"../node_modules/axios/lib/defaults.js","./cancel/Cancel":"../node_modules/axios/lib/cancel/Cancel.js","./cancel/CancelToken":"../node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel":"../node_modules/axios/lib/cancel/isCancel.js","./helpers/spread":"../node_modules/axios/lib/helpers/spread.js","./helpers/isAxiosError":"../node_modules/axios/lib/helpers/isAxiosError.js"}],"../node_modules/axios/index.js":[function(require,module,exports) {
 module.exports = require('./lib/axios');
-},{"./lib/axios":"../node_modules/axios/lib/axios.js"}],"LinkBlock.js":[function(require,module,exports) {
+},{"./lib/axios":"../node_modules/axios/lib/axios.js"}],"common/LinkBlock.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35562,7 +35562,7 @@ var LinkBlock = function LinkBlock(_ref) {
 
 var _default = LinkBlock;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"LinkBlockList.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"common/LinkBlockList.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35579,7 +35579,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var LinkBlockList = function LinkBlockList(_ref) {
   var dataList = _ref.dataList,
       path = _ref.path;
-  return dataList.length > 0 ? dataList.map(function (data, index) {
+  return dataList == "loading" ? _react.default.createElement("h6", null, "Loading") : dataList.length > 0 ? dataList.map(function (data, index) {
     return _react.default.createElement(_LinkBlock.default, {
       key: index,
       data: data,
@@ -35591,7 +35591,7 @@ var LinkBlockList = function LinkBlockList(_ref) {
 
 var _default = LinkBlockList;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./LinkBlock":"LinkBlock.js"}],"FilmDetails.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./LinkBlock":"common/LinkBlock.js"}],"components/FilmDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35607,11 +35607,9 @@ var _reactRouterDom = require("react-router-dom");
 
 var _reactRouter = require("react-router");
 
-var _String = require("./String");
+var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
-
-var _LinkBlockList = _interopRequireDefault(require("./LinkBlockList"));
+var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35632,7 +35630,6 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var FilmDetails = function FilmDetails() {
-  // const [name, setName] = useState([]);
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       planets = _useState2[0],
@@ -35657,9 +35654,6 @@ var FilmDetails = function FilmDetails() {
   var toDisplay = location.state.toDisplay;
   var film = toDisplay;
   (0, _react.useEffect)(function () {
-    // let characterPromises = film.characters.map((char) => {
-    //     return axios.get(char);
-    // });
     var worldPromises = film.planets.map(function (planet) {
       return _axios.default.get(planet);
     });
@@ -35671,11 +35665,7 @@ var FilmDetails = function FilmDetails() {
     });
     var starshipPromises = film.starships.map(function (starship) {
       return _axios.default.get(starship);
-    }); // axios.all(characterPromises).then((result) => {
-    //     setName(result.map((char) => {
-    //         return char.data;
-    //     }));
-    // });
+    });
 
     _axios.default.all(worldPromises).then(function (result) {
       setPlanets(result.map(function (planet) {
@@ -35701,7 +35691,7 @@ var FilmDetails = function FilmDetails() {
       }));
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Title: ", film.title), _react.default.createElement("div", null, "Episode: ", film.episode_id), _react.default.createElement("div", null, "Opening Crawl:", _react.default.createElement("br", null), film.opening_crawl), _react.default.createElement("div", null, "Director: ", film.director), _react.default.createElement("div", null, "Producer: ", film.producer), _react.default.createElement("div", null, "Release Date: ", film.release_date), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Title: ", film.title), _react.default.createElement("div", null, "Episode: ", film.episode_id), _react.default.createElement("div", null, "Opening Crawl:", _react.default.createElement("br", null), film.opening_crawl), _react.default.createElement("div", null, "Director: ", film.director), _react.default.createElement("div", null, "Producer: ", film.producer), _react.default.createElement("div", null, "Release Date: ", film.release_date), _react.default.createElement("div", null, _react.default.createElement("h5", null, _react.default.createElement(_reactRouterDom.Link, {
     className: "link",
     to: {
       pathname: _String.film_character_link,
@@ -35710,16 +35700,16 @@ var FilmDetails = function FilmDetails() {
         title: film.title
       }
     }
-  }, "Characters Features in ", film.title)), _react.default.createElement("div", null, "Featured Planets: ", _react.default.createElement(_LinkBlockList.default, {
+  }, "Characters Features in ", film.title))), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Featured Planets: "), " ", _react.default.createElement(_LinkBlockList.default, {
     dataList: planets,
     path: _String.world_link
-  })), _react.default.createElement("div", null, "Featured Species: ", _react.default.createElement(_LinkBlockList.default, {
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Featured Species:"), " ", _react.default.createElement(_LinkBlockList.default, {
     dataList: species,
     path: _String.specie_link
-  })), _react.default.createElement("div", null, "Vehicles Featured: ", _react.default.createElement(_LinkBlockList.default, {
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Vehicles Featured:"), " ", _react.default.createElement(_LinkBlockList.default, {
     dataList: vehicles,
     path: _String.vehicle_link
-  })), _react.default.createElement("div", null, "Starships Featured: ", _react.default.createElement(_LinkBlockList.default, {
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Starships Featured:"), " ", _react.default.createElement(_LinkBlockList.default, {
     dataList: starships,
     path: _String.starship_link
   })));
@@ -35727,7 +35717,7 @@ var FilmDetails = function FilmDetails() {
 
 var _default = FilmDetails;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js","./LinkBlockList":"LinkBlockList.js"}],"CharacterDetails.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/CharacterDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35741,9 +35731,11 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouter = require("react-router");
 
-var _String = require("./String");
+var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+
+var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -35835,44 +35827,32 @@ var CharacterDetails = function CharacterDetails() {
       setHomeword(result.data);
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", character.name), _react.default.createElement("div", null, "Birth Date: ", character.birth_year), _react.default.createElement("div", null, "Eye Color: ", character.eye_color), _react.default.createElement("div", null, "Gender: ", character.gender), _react.default.createElement("div", null, "Hair Colour: ", character.hair_color), _react.default.createElement("div", null, "Mass: ", character.mass), _react.default.createElement("div", null, "Skin Color: ", character.skin_color), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", character.name), _react.default.createElement("div", null, "Birth Date: ", character.birth_year), _react.default.createElement("div", null, "Eye Color: ", character.eye_color), _react.default.createElement("div", null, "Gender: ", character.gender), _react.default.createElement("div", null, "Hair Colour: ", character.hair_color), _react.default.createElement("div", null, "Mass: ", character.mass), _react.default.createElement("div", null, "Skin Color: ", character.skin_color), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), films.length > 0 ? films.map(function (film, index) {
     return _react.default.createElement(_LinkBlock.default, {
       key: index,
       data: film,
       path: _String.film_link,
       name: film.title
     });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Home World: ", _react.default.createElement(_LinkBlock.default, {
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World: "), " ", _react.default.createElement(_LinkBlock.default, {
     data: homeworld,
     path: _String.world_link,
     name: homeworld.name
-  })), _react.default.createElement("div", null, "Species: ", species.length > 0 ? species.map(function (specie, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: specie,
-      path: _String.specie_link,
-      name: specie.name
-    });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Vehicles Piloted: ", vehicles.length > 0 ? vehicles.map(function (vehicle, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: vehicle,
-      path: _String.vehicle_link,
-      name: vehicle.name
-    });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Starships Piloted: ", starships.length > 0 ? starships.map(function (starship, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: starship,
-      path: _String.starship_link,
-      name: starship.name
-    });
-  }) : _react.default.createElement("div", null, "NA")));
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Species:"), " ", _react.default.createElement(_LinkBlockList.default, {
+    dataList: species,
+    path: _String.specie_link
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Vehicles Piloted:"), " ", _react.default.createElement(_LinkBlockList.default, {
+    dataList: vehicles,
+    path: _String.vehicle_link
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Starships Piloted:"), " ", _react.default.createElement(_LinkBlockList.default, {
+    dataList: starships,
+    path: _String.starship_link
+  })));
 };
 
 var _default = CharacterDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"WorldDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/WorldDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35886,9 +35866,11 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouter = require("react-router");
 
-var _String = require("./String");
+var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+
+var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -35943,26 +35925,22 @@ var WorldDetails = function WorldDetails() {
       }));
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Planet: ", world.name), _react.default.createElement("div", null, "Climate: ", world.climate), _react.default.createElement("div", null, "Diameter: ", world.diameter), _react.default.createElement("div", null, "Rotation Period: ", world.rotation_period), _react.default.createElement("div", null, "Orbital Period: ", world.orbital_period), _react.default.createElement("div", null, "Terrain: ", world.terrain), _react.default.createElement("div", null, "Surface Water: ", world.surface_water), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Planet: ", world.name), _react.default.createElement("div", null, "Climate: ", world.climate), _react.default.createElement("div", null, "Diameter: ", world.diameter), _react.default.createElement("div", null, "Rotation Period: ", world.rotation_period), _react.default.createElement("div", null, "Orbital Period: ", world.orbital_period), _react.default.createElement("div", null, "Terrain: ", world.terrain), _react.default.createElement("div", null, "Surface Water: ", world.surface_water), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.length > 0 ? films.map(function (film, index) {
     return _react.default.createElement(_LinkBlock.default, {
       key: index,
       data: film,
       path: _String.film_link,
       name: film.title
     });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Population: ", world.population), _react.default.createElement("div", null, "Residents: ", residents.length > 0 ? residents.map(function (resident, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: resident,
-      path: _String.character_link,
-      name: resident.name
-    });
-  }) : _react.default.createElement("div", null, "NA")));
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Population: ", world.population), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Residents:"), " ", _react.default.createElement(_LinkBlockList.default, {
+    dataList: residents,
+    path: _String.character_link
+  })));
 };
 
 var _default = WorldDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"SpecieDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/SpecieDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35976,9 +35954,11 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouter = require("react-router");
 
-var _String = require("./String");
+var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+
+var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -36042,30 +36022,26 @@ var SpecieDetails = function SpecieDetails() {
       setHomeworld(result.data);
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Specie: ", specie.name), _react.default.createElement("div", null, "Average Height: ", specie.average_height), _react.default.createElement("div", null, "Average Lifespan: ", specie.average_lifespan), _react.default.createElement("div", null, "Classification: ", specie.classifcation), _react.default.createElement("div", null, "Designation: ", specie.designation), _react.default.createElement("div", null, "Possible Eye Colours: ", specie.eye_colors), _react.default.createElement("div", null, "Possible Skin Colours: ", specie.skin_colors), _react.default.createElement("div", null, "Language: ", specie.language), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Specie: ", specie.name), _react.default.createElement("div", null, "Average Height: ", specie.average_height), _react.default.createElement("div", null, "Average Lifespan: ", specie.average_lifespan), _react.default.createElement("div", null, "Classification: ", specie.classifcation), _react.default.createElement("div", null, "Designation: ", specie.designation), _react.default.createElement("div", null, "Possible Eye Colours: ", specie.eye_colors), _react.default.createElement("div", null, "Possible Skin Colours: ", specie.skin_colors), _react.default.createElement("div", null, "Language: ", specie.language), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances: "), films.length > 0 ? films.map(function (film, index) {
     return _react.default.createElement(_LinkBlock.default, {
       key: index,
       data: film,
       path: _String.film_link,
       name: film.title
     });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Home World: ", _react.default.createElement(_LinkBlock.default, {
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World:"), " ", _react.default.createElement(_LinkBlock.default, {
     data: homeworld,
     path: _String.world_link,
     name: homeworld.name
-  })), _react.default.createElement("div", null, "Members of Species: ", characters.length > 0 ? characters.map(function (char, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: char,
-      path: _String.character_link,
-      name: char.name
-    });
-  }) : _react.default.createElement("div", null, "NA")));
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Members of Species:"), " ", _react.default.createElement(_LinkBlockList.default, {
+    dataList: characters,
+    path: _String.character_link
+  })));
 };
 
 var _default = SpecieDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"VehicleDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/VehicleDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36079,9 +36055,11 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouter = require("react-router");
 
-var _String = require("./String");
+var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+
+var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -36136,14 +36114,10 @@ var VehicleDetails = function VehicleDetails() {
       }));
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", vehicle.name), _react.default.createElement("div", null, "Class: ", vehicle.vehicle_class), _react.default.createElement("div", null, "Model: ", vehicle.model), _react.default.createElement("div", null, "Passengers: ", vehicle.passengers), _react.default.createElement("div", null, "Cargo Capacity: ", vehicle.cargo_capacity), _react.default.createElement("div", null, "Crew: ", vehicle.crew), _react.default.createElement("div", null, "Cost In Credits: ", vehicle.cost_in_credits), _react.default.createElement("div", null, "Manufacturer: ", vehicle.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", vehicle.max_atmosphering_speed), _react.default.createElement("div", null, "Known Pilots : ", pilots.length > 0 ? pilots.map(function (pilot, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: pilot,
-      path: _String.character_link,
-      name: pilot.name
-    });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", vehicle.name), _react.default.createElement("div", null, "Class: ", vehicle.vehicle_class), _react.default.createElement("div", null, "Model: ", vehicle.model), _react.default.createElement("div", null, "Passengers: ", vehicle.passengers), _react.default.createElement("div", null, "Cargo Capacity: ", vehicle.cargo_capacity), _react.default.createElement("div", null, "Crew: ", vehicle.crew), _react.default.createElement("div", null, "Cost In Credits: ", vehicle.cost_in_credits), _react.default.createElement("div", null, "Manufacturer: ", vehicle.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", vehicle.max_atmosphering_speed), _react.default.createElement("div", null, "Known Pilots : ", _react.default.createElement(_LinkBlockList.default, {
+    dataList: pilots,
+    path: _String.character_link
+  })), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
     return _react.default.createElement(_LinkBlock.default, {
       key: index,
       data: film,
@@ -36155,7 +36129,7 @@ var VehicleDetails = function VehicleDetails() {
 
 var _default = VehicleDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"StarshipDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/StarshipDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36169,9 +36143,11 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouter = require("react-router");
 
-var _String = require("./String");
+var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+
+var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -36226,14 +36202,10 @@ var StarshipDetails = function StarshipDetails() {
       }));
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", starship.name), _react.default.createElement("div", null, "Model: ", starship.model), _react.default.createElement("div", null, "Class: ", starship.starship_class), _react.default.createElement("div", null, "Crew: ", starship.crew), _react.default.createElement("div", null, "Cargo Capacity:", starship.cargo_capacity), _react.default.createElement("div", null, "Manufacturer: ", starship.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", starship.max_atmoshpering_speed), _react.default.createElement("div", null, "Length: ", starship.length), _react.default.createElement("div", null, "Passengers: ", starship.passengers), _react.default.createElement("div", null, "Cost in Credits: ", starship.cost_in_credits), _react.default.createElement("div", null, "Known Pilots : ", pilots.length > 0 ? pilots.map(function (pilot, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: pilot,
-      path: _String.character_link,
-      name: pilot.name
-    });
-  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, "Film Appearances: ", films.length > 0 ? films.map(function (film, index) {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", starship.name), _react.default.createElement("div", null, "Model: ", starship.model), _react.default.createElement("div", null, "Class: ", starship.starship_class), _react.default.createElement("div", null, "Crew: ", starship.crew), _react.default.createElement("div", null, "Cargo Capacity:", starship.cargo_capacity), _react.default.createElement("div", null, "Manufacturer: ", starship.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", starship.max_atmoshpering_speed), _react.default.createElement("div", null, "Length: ", starship.length), _react.default.createElement("div", null, "Passengers: ", starship.passengers), _react.default.createElement("div", null, "Cost in Credits: ", starship.cost_in_credits), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Known Pilots:"), " ", _react.default.createElement(_LinkBlockList.default, {
+    dataList: pilots,
+    path: _String.character_link
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.length > 0 ? films.map(function (film, index) {
     return _react.default.createElement(_LinkBlock.default, {
       key: index,
       data: film,
@@ -36245,7 +36217,7 @@ var StarshipDetails = function StarshipDetails() {
 
 var _default = StarshipDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"FilmCharacters.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/FilmCharacters.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36259,9 +36231,9 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _reactRouter = require("react-router");
 
-var _String = require("./String");
+var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36289,8 +36261,8 @@ var FilmCharacters = function FilmCharacters() {
 
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
-      name = _useState2[0],
-      setName = _useState2[1];
+      names = _useState2[0],
+      setNames = _useState2[1];
 
   (0, _react.useEffect)(function () {
     var characterPromises = characters.map(function (char) {
@@ -36298,24 +36270,20 @@ var FilmCharacters = function FilmCharacters() {
     });
 
     _axios.default.all(characterPromises).then(function (result) {
-      setName(result.map(function (char) {
+      setNames(result.map(function (char) {
         return char.data;
       }));
     });
   }, []);
-  return _react.default.createElement("div", null, "Character Featured in ", title, ":", _react.default.createElement("br", null), name.length > 0 ? name.map(function (char, index) {
-    return _react.default.createElement(_LinkBlock.default, {
-      key: index,
-      data: char,
-      path: _String.character_link,
-      name: char.name
-    });
-  }) : _react.default.createElement("div", null, "NA"));
+  return _react.default.createElement("div", null, _react.default.createElement("h5", null, "Character Featured in ", title, ":"), _react.default.createElement("br", null), _react.default.createElement(_LinkBlockList.default, {
+    dataList: names,
+    path: _String.character_link
+  }));
 };
 
 var _default = FilmCharacters;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"FilmDisplay.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/FilmDisplay.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36327,9 +36295,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
-var _String = require("./String");
+var _String = require("../strings/String");
 
-var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
+var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36350,7 +36318,6 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var FilmDisplay = function FilmDisplay() {
-  // const [films, setFilms] = useState([]);
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       display = _useState2[0],
@@ -36364,17 +36331,14 @@ var FilmDisplay = function FilmDisplay() {
   (0, _react.useEffect)(function () {
     if (query == "Star Wars" || query == "") {
       _axios.default.get("".concat(_String.film_endpoint)).then(function (e) {
-        // setFilms(e.data.results);
         setDisplay(e.data.results);
       });
     } else {
       _axios.default.get("".concat(_String.film_endpoint, "?search=").concat(query)).then(function (e) {
-        // setFilms(e.data.results);
         setDisplay(e.data.results);
       });
     }
   }, [query]);
-  console.log(query);
   return _react.default.createElement("div", null, _react.default.createElement("div", {
     id: "search-param"
   }, _react.default.createElement("form", {
@@ -36400,7 +36364,7 @@ var FilmDisplay = function FilmDisplay() {
 
 var _default = FilmDisplay;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","./String":"String.js","./LinkBlock":"LinkBlock.js"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js"}],"components/App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -36409,7 +36373,7 @@ var _reactDom = require("react-dom");
 
 var _reactRouterDom = require("react-router-dom");
 
-var _String = require("./String");
+var _String = require("../strings/String");
 
 var _FilmDetails = _interopRequireDefault(require("./FilmDetails"));
 
@@ -36460,7 +36424,7 @@ var App = function App() {
 };
 
 (0, _reactDom.render)(_react.default.createElement(App, null), document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./String":"String.js","./FilmDetails":"FilmDetails.js","./CharacterDetails":"CharacterDetails.js","./WorldDetails":"WorldDetails.js","./SpecieDetails":"SpecieDetails.js","./VehicleDetails":"VehicleDetails.js","./StarshipDetails":"StarshipDetails.js","./FilmCharacters":"FilmCharacters.js","./FilmDisplay":"FilmDisplay.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../strings/String":"strings/String.js","./FilmDetails":"components/FilmDetails.js","./CharacterDetails":"components/CharacterDetails.js","./WorldDetails":"components/WorldDetails.js","./SpecieDetails":"components/SpecieDetails.js","./VehicleDetails":"components/VehicleDetails.js","./StarshipDetails":"components/StarshipDetails.js","./FilmCharacters":"components/FilmCharacters.js","./FilmDisplay":"components/FilmDisplay.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -36488,7 +36452,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59090" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65216" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -36663,5 +36627,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel/src/builtins/hmr-runtime.js","App.js"], null)
-//# sourceMappingURL=/App.d36a57b6.js.map
+},{}]},{},["../node_modules/parcel/src/builtins/hmr-runtime.js","components/App.js"], null)
+//# sourceMappingURL=/App.98f4d852.js.map

@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
-import { film_link, character_link } from "./String";
-import LinkBlock from "./LinkBlock";
+import { film_link, character_link } from "../strings/String";
+import LinkBlock from "../common/LinkBlock";
+import LinkBlockList from "../common/LinkBlockList";
 
 const WorldDetails = () => {
 
@@ -60,7 +61,7 @@ const WorldDetails = () => {
                 Surface Water: {world.surface_water}
             </div>
             <div>
-                Film Appearances: {films.length > 0 ? (films.map((film, index) => {
+                <h5>Film Appearances:</h5> {films.length > 0 ? (films.map((film, index) => {
                             return <LinkBlock key={index} data={film} path={film_link} name={film.title} />
                         })) : <div>NA</div>}
             </div>
@@ -68,10 +69,7 @@ const WorldDetails = () => {
                 Population: {world.population}
             </div>
             <div>
-                Residents: {residents.length > 0 ? (residents.map((resident, index) => {
-                            return <LinkBlock key={index} data={resident} path={character_link} name={resident.name} />
-                        })) : <div>NA</div>}
-
+                <h5>Residents:</h5> <LinkBlockList dataList={residents} path={character_link} />
             </div>
         </div>
 

@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
-import { film_link, character_link, world_link } from "./String";
-import LinkBlock from "./LinkBlock";
+import { film_link, character_link, world_link } from "../strings/String";
+import LinkBlock from "../common/LinkBlock";
+import LinkBlockList from "../common/LinkBlockList";
 
 const SpecieDetails = () => {
 
@@ -68,18 +69,16 @@ const SpecieDetails = () => {
                 Language: {specie.language}
             </div>
             <div>
-                Film Appearances: {films.length > 0 ? (films.map((film, index) => {
+                <h5>Film Appearances: </h5>
+                {films.length > 0 ? (films.map((film, index) => {
                     return <LinkBlock key={index} data={film} path={film_link} name={film.title} />
                 })) : <div>NA</div>}
             </div>
             <div>
-                Home World: <LinkBlock data={homeworld} path={world_link} name={homeworld.name} />
+                <h5>Home World:</h5> <LinkBlock data={homeworld} path={world_link} name={homeworld.name} />
             </div>
             <div>
-                Members of Species: {characters.length > 0 ? (characters.map((char, index) => {
-                            return <LinkBlock key={index} data={char} path={character_link} name={char.name} />
-                        })) : <div>NA</div>}
-
+                <h5>Members of Species:</h5> <LinkBlockList dataList={characters} path={character_link} />
             </div>
         </div>
     )

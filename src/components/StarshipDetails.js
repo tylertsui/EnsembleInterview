@@ -2,24 +2,25 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
-import { film_link, character_link } from "./String";
-import LinkBlock from "./LinkBlock";
+import { film_link, character_link } from "../strings/String";
+import LinkBlock from "../common/LinkBlock";
+import LinkBlockList from "../common/LinkBlockList";
 
-const VehicleDetails = () => {
+const StarshipDetails = () => {
 
     const location = useLocation();
     const { toDisplay } = location.state;
-    const vehicle = toDisplay;
+    const starship = toDisplay;
 
     const [pilots, setPilots] = useState([]);
     const [films, setFilms] = useState([]);
 
     useEffect(()=> {
-        let pilotPromises = vehicle.pilots.map((pilot) => {
+        let pilotPromises = starship.pilots.map((pilot) => {
             return axios.get(pilot);
         });
 
-        let filmPromises = vehicle.films.map((film) => {
+        let filmPromises = starship.films.map((film) => {
             return axios.get(film);
         });
 
@@ -39,40 +40,40 @@ const VehicleDetails = () => {
     return (
         <div>
             <div>
-                Name: {vehicle.name}
+                Name: {starship.name}
             </div>
             <div>
-                Class: {vehicle.vehicle_class}
+                Model: {starship.model}
             </div>
             <div>
-                Model: {vehicle.model}
+                Class: {starship.starship_class}
             </div>
             <div>
-                Passengers: {vehicle.passengers}
+                Crew: {starship.crew}
             </div>
             <div>
-                Cargo Capacity: {vehicle.cargo_capacity}
+                Cargo Capacity:{starship.cargo_capacity}
             </div>
             <div>
-                Crew: {vehicle.crew}
+                Manufacturer: {starship.manufacturer}
             </div>
             <div>
-                Cost In Credits: {vehicle.cost_in_credits}
+                Max Atmosphering Speed: {starship.max_atmoshpering_speed}
             </div>
             <div>
-                Manufacturer: {vehicle.manufacturer}
+                Length: {starship.length}
             </div>
             <div>
-                Max Atmosphering Speed: {vehicle.max_atmosphering_speed}
+                Passengers: {starship.passengers}
             </div>
             <div>
-                Known Pilots : {
-                    pilots.length > 0 ? (pilots.map((pilot, index) => {
-                        return <LinkBlock key={index} data={pilot} path={character_link} name={pilot.name} />
-                    })) : <div>NA</div>}
+                Cost in Credits: {starship.cost_in_credits}
             </div>
             <div>
-                Film Appearances: {
+                <h5>Known Pilots:</h5> <LinkBlockList dataList={pilots} path={character_link} />
+            </div>
+            <div>
+                <h5>Film Appearances:</h5> {
                     films.length > 0 ? (films.map((film, index) => {
                         return <LinkBlock key={index} data={film} path={film_link} name={film.title} />
                     })) : <div>NA</div>}
@@ -81,4 +82,4 @@ const VehicleDetails = () => {
     )
 }
 
-export default VehicleDetails;
+export default StarshipDetails;

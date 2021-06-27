@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router";
 
-import { character_link } from "./String";
-import LinkBlock from "./LinkBlock";
+import { character_link } from "../strings/String";
+import LinkBlockList from "../common/LinkBlockList";
 
 const FilmCharacters = () => {
 
     const location = useLocation();
     const { characters, title } = location.state;
 
-    const [name, setName] = useState([]);
+    const [names, setNames] = useState([]);
 
     useEffect(() => {
         let characterPromises = characters.map((char) => {
@@ -18,7 +18,7 @@ const FilmCharacters = () => {
         });
 
         axios.all(characterPromises).then((result) => {
-            setName(result.map((char) => {
+            setNames(result.map((char) => {
                 return char.data;
             }));
         });
@@ -27,11 +27,9 @@ const FilmCharacters = () => {
 
     return (
         <div>
-            Character Featured in {title}:
+            <h5>Character Featured in {title}:</h5>
             <br />
-            {name.length > 0 ? (name.map((char, index) => {
-                return <LinkBlock key={index} data={char} path={character_link} name={char.name} />
-            })) : <div>NA</div>}
+            <LinkBlockList dataList={names} path={character_link} />
         </div>
     )
 }
