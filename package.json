@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/components/App.js",
+    "start": "parcel src/index.html",
     "dev": "parcel src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,10 +18,8 @@
     "url": "https://github.com/tylertsui/EnsembleInterview/issues"
   },
   "homepage": "https://github.com/tylertsui/EnsembleInterview#readme",
-  "devDependencies": {
-    "parcel": "^1.12.3"
-  },
   "dependencies": {
+    "parcel": "^1.12.3",
     "axios": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
