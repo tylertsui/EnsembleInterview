@@ -35920,11 +35920,11 @@ var CharacterDetails = function CharacterDetails() {
   }, []);
   return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", character.name), _react.default.createElement("div", null, "Birth Date: ", character.birth_year), _react.default.createElement("div", null, "Eye Color: ", character.eye_color), _react.default.createElement("div", null, "Gender: ", character.gender), _react.default.createElement("div", null, "Hair Colour: ", character.hair_color), _react.default.createElement("div", null, "Mass: ", character.mass), _react.default.createElement("div", null, "Skin Color: ", character.skin_color), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_FilmBlockList.default, {
     dataList: films.data
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World: "), " ", homeworld.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlock.default, {
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World:"), " ", homeworld.loading == true ? _react.default.createElement("div", null, "Loading") : homeworld.data.length > 0 ? _react.default.createElement(_LinkBlock.default, {
     data: homeworld.data,
     path: _String.world_link,
     name: homeworld.data.name
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Species:"), " ", species.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Species:"), " ", species.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
     dataList: species.data,
     path: _String.specie_link
   })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Vehicles Piloted:"), " ", vehicles.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
@@ -36137,14 +36137,13 @@ var SpecieDetails = function SpecieDetails() {
       });
     });
   }, []);
-  console.log(homeworld.data);
   return _react.default.createElement("div", null, _react.default.createElement("div", null, "Specie: ", specie.name), _react.default.createElement("div", null, "Average Height: ", specie.average_height), _react.default.createElement("div", null, "Average Lifespan: ", specie.average_lifespan), _react.default.createElement("div", null, "Classification: ", specie.classifcation), _react.default.createElement("div", null, "Designation: ", specie.designation), _react.default.createElement("div", null, "Possible Eye Colours: ", specie.eye_colors), _react.default.createElement("div", null, "Possible Skin Colours: ", specie.skin_colors), _react.default.createElement("div", null, "Language: ", specie.language), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances: "), " ", films.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_FilmBlockList.default, {
     dataList: films.data
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World:"), " ", homeworld.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlock.default, {
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World:"), " ", homeworld.loading == true ? _react.default.createElement("div", null, "Loading") : homeworld.data.length > 0 ? _react.default.createElement(_LinkBlock.default, {
     data: homeworld.data,
     path: _String.world_link,
     name: homeworld.data.name
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Members of Species:"), " ", characters.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+  }) : _react.default.createElement("div", null, "NA")), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Members of Species:"), " ", characters.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
     dataList: characters.data,
     path: _String.character_link
   })));
@@ -36590,7 +36589,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65436" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62831" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
