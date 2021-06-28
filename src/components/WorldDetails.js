@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
-import { film_link, character_link } from "../strings/String";
+import { character_link } from "../strings/String";
 import FilmBlockList from "../common/FilmBlockList";
 import LinkBlockList from "../common/LinkBlockList";
 
+
+// Organizes and displays WorldDetails objects
 const WorldDetails = () => {
 
     const location = useLocation();

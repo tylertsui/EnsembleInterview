@@ -6,6 +6,8 @@ import { useLocation } from "react-router";
 import { specie_link, world_link, vehicle_link, starship_link, film_character_link } from "../strings/String";
 import LinkBlockList from "../common/LinkBlockList";
 
+
+// Organizes and displays film objects
 const FilmDetails = () => {
 
     const [planets, setPlanets] = useState([]);

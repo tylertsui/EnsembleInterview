@@ -12,6 +12,8 @@ import StarshipDetails from "./StarshipDetails";
 import FilmCharacters from "./FilmCharacters";
 import FilmDisplay from "./FilmDisplay";
 
+
+// Driver for the App
 const App = () => {
 
     return (
@@ -20,7 +22,7 @@ const App = () => {
                 <Link to="/">
                     <p>Star Wars!</p>
                 </Link>
-                <Switch>
+                <Switch> {/* Ensures only first match is rendered */}
                     <Route path={film_character_link} children={<FilmCharacters />} />
                     <Route path={character_link} children={<CharacterDetails />}/> 
                     <Route path={film_link}children={<FilmDetails />} /> 

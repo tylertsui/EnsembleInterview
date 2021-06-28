@@ -4,6 +4,10 @@ import axios from "axios";
 import { film_endpoint, film_link } from "../strings/String";
 import LinkBlock from "../common/LinkBlock";
 
+
+// Fetches and displays current films in SWAPI
+// Search bar continually updates query, which triggers the useEffect to perform a fetch using
+// SWAPI's own search query end point and displays results back on screen
 const FilmDisplay = () => {
 
     const [display, setDisplay] = useState([]);

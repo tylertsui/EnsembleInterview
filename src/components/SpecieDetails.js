@@ -2,11 +2,13 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
-import { film_link, character_link, world_link } from "../strings/String";
+import { character_link, world_link } from "../strings/String";
 import LinkBlock from "../common/LinkBlock";
 import FilmBlockList from "../common/FilmBlockList";
 import LinkBlockList from "../common/LinkBlockList";
 
+
+// Organizes and displays Specie objects
 const SpecieDetails = () => {
 
     const location = useLocation();

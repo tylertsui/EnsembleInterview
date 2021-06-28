@@ -5,6 +5,8 @@ import { useLocation } from "react-router";
 import { character_link } from "../strings/String";
 import LinkBlockList from "../common/LinkBlockList";
 
+
+// Displays all characters that appear in a certain film
 const FilmCharacters = () => {
 
     const location = useLocation();
