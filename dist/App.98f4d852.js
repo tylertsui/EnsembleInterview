@@ -35550,7 +35550,7 @@ var LinkBlock = function LinkBlock(_ref) {
   var data = _ref.data,
       path = _ref.path,
       name = _ref.name;
-  return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+  return _react.default.createElement(_reactRouterDom.Link, {
     className: "link",
     to: {
       pathname: path,
@@ -35558,7 +35558,7 @@ var LinkBlock = function LinkBlock(_ref) {
         toDisplay: data
       }
     }
-  }, name));
+  }, _react.default.createElement("button", null, name));
 };
 
 var _default = LinkBlock;
@@ -35727,7 +35727,9 @@ var FilmDetails = function FilmDetails() {
         title: film.title
       }
     }
-  }, "Characters Features in ", film.title))), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Featured Planets: "), " ", planets.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+  }, _react.default.createElement("button", {
+    className: "character-featured"
+  }, "Characters Features in ", film.title)))), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Featured Planets: "), " ", planets.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
     dataList: planets.data,
     path: _String.world_link
   })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Featured Species:"), " ", species.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
@@ -36024,9 +36026,9 @@ var WorldDetails = function WorldDetails() {
       });
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Planet: ", world.name), _react.default.createElement("div", null, "Climate: ", world.climate), _react.default.createElement("div", null, "Diameter: ", world.diameter), _react.default.createElement("div", null, "Rotation Period: ", world.rotation_period), _react.default.createElement("div", null, "Orbital Period: ", world.orbital_period), _react.default.createElement("div", null, "Terrain: ", world.terrain), _react.default.createElement("div", null, "Surface Water: ", world.surface_water), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_FilmBlockList.default, {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Planet: ", world.name), _react.default.createElement("div", null, "Climate: ", world.climate), _react.default.createElement("div", null, "Diameter: ", world.diameter), _react.default.createElement("div", null, "Population: ", world.population), _react.default.createElement("div", null, "Rotation Period: ", world.rotation_period), _react.default.createElement("div", null, "Orbital Period: ", world.orbital_period), _react.default.createElement("div", null, "Terrain: ", world.terrain), _react.default.createElement("div", null, "Surface Water: ", world.surface_water), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_FilmBlockList.default, {
     dataList: films.data
-  })), _react.default.createElement("div", null, "Population: ", world.population), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Residents:"), " ", residents.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Residents:"), " ", residents.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
     dataList: residents.data,
     path: _String.character_link
   })));
@@ -36488,7 +36490,9 @@ var FilmDisplay = function FilmDisplay() {
     onChange: function onChange(e) {
       return setQuery(e.target.value);
     }
-  })))), _react.default.createElement("div", null, display.map(function (film, index) {
+  })))), _react.default.createElement("div", {
+    className: "film-list"
+  }, display.map(function (film, index) {
     return _react.default.createElement(_LinkBlock.default, {
       key: index,
       data: film,
@@ -36533,7 +36537,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var App = function App() {
   return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_reactRouterDom.Link, {
     to: "/"
-  }, _react.default.createElement("p", null, "Star Wars!")), _react.default.createElement(_reactRouterDom.Switch, null, " ", _react.default.createElement(_reactRouterDom.Route, {
+  }, _react.default.createElement("p", {
+    className: "header"
+  }, "Star Wars!")), _react.default.createElement(_reactRouterDom.Switch, null, " ", _react.default.createElement(_reactRouterDom.Route, {
     path: _String.film_character_link,
     children: _react.default.createElement(_FilmCharacters.default, null)
   }), _react.default.createElement(_reactRouterDom.Route, {
@@ -36589,7 +36595,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62831" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63458" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

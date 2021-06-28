@@ -36,7 +36,7 @@ const FilmDisplay = () => {
                     </label>
                 </form>            
             </div>
-            <div>
+            <div className="film-list">
                 {display.map((film, index) => {
                     return <LinkBlock key={index} data={film} path={film_link} name={film.title} />
                 })}

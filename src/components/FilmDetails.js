@@ -103,7 +103,7 @@ const FilmDetails = () => {
                         characters: film.characters, 
                         title: film.title,
                     }
-                }}>Characters Features in {film.title}</Link></h5>
+                }}><button className="character-featured">Characters Features in {film.title}</button></Link></h5>
             </div>
             <div>
                 <h5>Featured Planets: </h5> {planets.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={planets.data} path={world_link}/>)}

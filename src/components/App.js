@@ -20,7 +20,7 @@ const App = () => {
         <div>
             <Router>
                 <Link to="/">
-                    <p>Star Wars!</p>
+                    <p className="header">Star Wars!</p>
                 </Link>
                 <Switch> {/* Ensures only first match is rendered */}
                     <Route path={film_character_link} children={<FilmCharacters />} />

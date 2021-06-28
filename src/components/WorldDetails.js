@@ -57,6 +57,9 @@ const WorldDetails = () => {
                 Diameter: {world.diameter}
             </div>
             <div>
+                Population: {world.population}
+            </div>
+            <div>
                 Rotation Period: {world.rotation_period}
             </div>
             <div>
@@ -70,9 +73,6 @@ const WorldDetails = () => {
             </div>
             <div>
                 <h5>Film Appearances:</h5> {films.loading == true ? (<div>Loading</div>) : (<FilmBlockList dataList={films.data} />)}
-            </div>
-            <div>
-                Population: {world.population}
             </div>
             <div>
                 <h5>Residents:</h5> {residents.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={residents.data} path={character_link} />)}
