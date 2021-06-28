@@ -14,8 +14,8 @@ const StarshipDetails = () => {
     const { toDisplay } = location.state;
     const starship = toDisplay;
 
-    const [pilots, setPilots] = useState([]);
-    const [films, setFilms] = useState([]);
+    const [pilots, setPilots] = useState({loading: true, data: []});
+    const [films, setFilms] = useState({loading: true, data: []});
 
     useEffect(()=> {
         let pilotPromises = starship.pilots.map((pilot) => {
@@ -27,15 +27,21 @@ const StarshipDetails = () => {
         });
 
         axios.all(pilotPromises).then((results) => {
-            setPilots(results.map((result) => {
-                return result.data;
-            }));
+            setPilots({
+                data: results.map((result) => {
+                    return result.data;
+                }),
+                loading: false
+            });
         });
 
         axios.all(filmPromises).then((results) => {
-            setFilms(results.map((result) => {
-                return result.data;
-            }));
+            setFilms({
+                data: results.map((result) => {
+                    return result.data;
+                }),
+                loading: false
+            });
         });
     }, []);
 
@@ -72,10 +78,10 @@ const StarshipDetails = () => {
                 Cost in Credits: {starship.cost_in_credits}
             </div>
             <div>
-                <h5>Known Pilots:</h5> <LinkBlockList dataList={pilots} path={character_link} />
+                <h5>Known Pilots:</h5> {pilots.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={pilots} path={character_link} />)}
             </div>
             <div>
-                <h5>Film Appearances:</h5> <FilmBlockList dataList={films} />
+                <h5>Film Appearances:</h5> {films.data == true ? (<div>Loading</div>) : (<FilmBlockList dataList={films} />)}
             </div>
         </div>
     )

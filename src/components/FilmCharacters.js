@@ -12,7 +12,7 @@ const FilmCharacters = () => {
     const location = useLocation();
     const { characters, title } = location.state;
 
-    const [names, setNames] = useState([]);
+    const [names, setNames] = useState({loading: true, data: []});
 
     useEffect(() => {
         let characterPromises = characters.map((char) => {
@@ -20,9 +20,12 @@ const FilmCharacters = () => {
         });
 
         axios.all(characterPromises).then((result) => {
-            setNames(result.map((char) => {
-                return char.data;
-            }));
+            setNames({
+                data: result.map((char) => {
+                    return char.data;
+                }),
+                loading: false
+            });
         });
 
     }, []);
@@ -31,7 +34,7 @@ const FilmCharacters = () => {
         <div>
             <h5>Character Featured in {title}:</h5>
             <br />
-            <LinkBlockList dataList={names} path={character_link} />
+            {names.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={names.data} path={character_link} />)}
         </div>
     )
 }

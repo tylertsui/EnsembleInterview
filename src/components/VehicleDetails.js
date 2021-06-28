@@ -14,8 +14,8 @@ const VehicleDetails = () => {
     const { toDisplay } = location.state;
     const vehicle = toDisplay;
 
-    const [pilots, setPilots] = useState([]);
-    const [films, setFilms] = useState([]);
+    const [pilots, setPilots] = useState({loading: true, data: []});
+    const [films, setFilms] = useState({loading: true, data: []});
 
     useEffect(()=> {
         let pilotPromises = vehicle.pilots.map((pilot) => {
@@ -27,15 +27,21 @@ const VehicleDetails = () => {
         });
 
         axios.all(pilotPromises).then((results) => {
-            setPilots(results.map((result) => {
-                return result.data;
-            }));
+            setPilots({
+                data: results.map((result) => {
+                    return result.data;
+                }),
+                loading: false
+            });
         });
 
-        axios.all(filmPromises).then((results) => {
-            setFilms(results.map((result) => {
-                return result.data;
-            }));
+        axios.all(filmPromises).then((result) => {
+            setFilms({
+                data: result.map((film) => {
+                    return film.data;
+                }),
+                loading: false
+            });
         });
     }, []);
 
@@ -69,10 +75,10 @@ const VehicleDetails = () => {
                 Max Atmosphering Speed: {vehicle.max_atmosphering_speed}
             </div>
             <div>
-                <h5>Known Pilots:</h5> <LinkBlockList dataList={pilots} path={character_link} />
+                <h5>Known Pilots:</h5> {pilots.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={pilots.data} path={character_link} />)}
             </div>
             <div>
-                <h5>Film Appearances:</h5> <FilmBlockList dataList={films} />
+                <h5>Film Appearances:</h5> {films.data == true ? (<div>Loading</div>) : (<FilmBlockList dataList={films.data} />)}
             </div>
         </div>
     )

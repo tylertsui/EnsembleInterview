@@ -15,9 +15,9 @@ const SpecieDetails = () => {
     const { toDisplay } = location.state;
     const specie = toDisplay;
 
-    const [films, setFilms] = useState([]);
-    const [characters, setCharacters] = useState([]);
-    const [homeworld, setHomeworld] = useState([]);
+    const [films, setFilms] = useState({loading: true, data: []});
+    const [characters, setCharacters] = useState({loading: true, data: []});
+    const [homeworld, setHomeworld] = useState({loading: true, data: []});
     
     useEffect(() => {
         let filmPromises = specie.films.map((film) => {
@@ -29,22 +29,32 @@ const SpecieDetails = () => {
         });
 
         axios.all(filmPromises).then((result) => {
-            setFilms(result.map((film) => {
-                return film.data;
-            }));
+            setFilms({
+                data: result.map((film) => {
+                    return film.data;
+                }),
+                loading: false
+            });
         });
 
         axios.all(characterPromises).then((result) => {
-            setCharacters(result.map((character) => {
-                return character.data;
-            }));
+            setCharacters({
+                data: result.map((character) => {
+                    return character.data;
+                }),
+                loading: false
+            });
         });
 
         axios.get(specie.homeworld).then((result) => {
-            setHomeworld(result.data);
+            setHomeworld({
+                data: result.data,
+                loading: false
+            });
         });
     }, []);
 
+    console.log(homeworld.data);
     return (
         <div>
             <div>
@@ -72,13 +82,13 @@ const SpecieDetails = () => {
                 Language: {specie.language}
             </div>
             <div>
-                <h5>Film Appearances: </h5> <FilmBlockList dataList={films} />
+                <h5>Film Appearances: </h5> {films.loading == true ? (<div>Loading</div>) : (<FilmBlockList dataList={films.data} />)}
             </div>
             <div>
-                <h5>Home World:</h5> <LinkBlock data={homeworld} path={world_link} name={homeworld.name} />
+                <h5>Home World:</h5> {homeworld.loading == true ? (<div>Loading</div>) : (<LinkBlock data={homeworld.data} path={world_link} name={homeworld.data.name} />)}
             </div>
             <div>
-                <h5>Members of Species:</h5> <LinkBlockList dataList={characters} path={character_link} />
+                <h5>Members of Species:</h5> {characters.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={characters.data} path={character_link} />)}
             </div>
         </div>
     )

@@ -14,11 +14,11 @@ const WorldDetails = () => {
     const { toDisplay } = location.state;
     const world = toDisplay;
 
-    const [residents, setResidents] = useState([]);
-    const [films, setFilms] = useState([]);
+    const [residents, setResidents] = useState({loading: true, data: []});
+    const [films, setFilms] = useState({loading: true, data: []});
 
     useEffect(() => {
-        let worldPromises = world.residents.map((resident) => {
+        let residentPromises = world.residents.map((resident) => {
             return axios.get(resident);
         });
 
@@ -26,16 +26,22 @@ const WorldDetails = () => {
             return axios.get(film);
         });
 
-        axios.all(worldPromises).then((results) => {
-            setResidents(results.map((resident) => {
-                return resident.data;
-            }));
+        axios.all(residentPromises).then((results) => {
+            setResidents({
+                data: results.map((resident) => {
+                    return resident.data;
+                }),
+                loading: false
+            });
         });
 
         axios.all(filmPromises).then((results) => {
-            setFilms(results.map((film) => {
-                return film.data;
-            }));
+            setFilms({
+                data: results.map((film) => {
+                    return film.data;
+                }),
+                loading: false
+            });
         });
     }, []);
 
@@ -63,13 +69,13 @@ const WorldDetails = () => {
                 Surface Water: {world.surface_water}
             </div>
             <div>
-                <h5>Film Appearances:</h5> <FilmBlockList dataList={films} />
+                <h5>Film Appearances:</h5> {films.loading == true ? (<div>Loading</div>) : (<FilmBlockList dataList={films.data} />)}
             </div>
             <div>
                 Population: {world.population}
             </div>
             <div>
-                <h5>Residents:</h5> <LinkBlockList dataList={residents} path={character_link} />
+                <h5>Residents:</h5> {residents.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={residents.data} path={character_link} />)}
             </div>
         </div>
 

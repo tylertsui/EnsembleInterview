@@ -35545,6 +35545,7 @@ var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// A Link template that contains the data queried in the router's state
 var LinkBlock = function LinkBlock(_ref) {
   var data = _ref.data,
       path = _ref.path,
@@ -35576,6 +35577,7 @@ var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Generates generic LinkBlock components using a List of objects
 var LinkBlockList = function LinkBlockList(_ref) {
   var dataList = _ref.dataList,
       path = _ref.path;
@@ -35629,23 +35631,36 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// Organizes and displays film objects
 var FilmDetails = function FilmDetails() {
-  var _useState = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState2 = _slicedToArray(_useState, 2),
       planets = _useState2[0],
       setPlanets = _useState2[1];
 
-  var _useState3 = (0, _react.useState)([]),
+  var _useState3 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState4 = _slicedToArray(_useState3, 2),
       species = _useState4[0],
       setSpecies = _useState4[1];
 
-  var _useState5 = (0, _react.useState)([]),
+  var _useState5 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState6 = _slicedToArray(_useState5, 2),
       vehicles = _useState6[0],
       setVehicles = _useState6[1];
 
-  var _useState7 = (0, _react.useState)([]),
+  var _useState7 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState8 = _slicedToArray(_useState7, 2),
       starships = _useState8[0],
       setStarships = _useState8[1];
@@ -35668,27 +35683,39 @@ var FilmDetails = function FilmDetails() {
     });
 
     _axios.default.all(worldPromises).then(function (result) {
-      setPlanets(result.map(function (planet) {
-        return planet.data;
-      }));
+      setPlanets({
+        data: result.map(function (planet) {
+          return planet.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.all(speciePromises).then(function (result) {
-      setSpecies(result.map(function (specie) {
-        return specie.data;
-      }));
+      setSpecies({
+        data: result.map(function (specie) {
+          return specie.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.all(vehiclePromises).then(function (result) {
-      setVehicles(result.map(function (vehicle) {
-        return vehicle.data;
-      }));
+      setVehicles({
+        data: result.map(function (vehicle) {
+          return vehicle.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.all(starshipPromises).then(function (result) {
-      setStarships(result.map(function (starship) {
-        return starship.data;
-      }));
+      setStarships({
+        data: result.map(function (starship) {
+          return starship.data;
+        }),
+        loading: false
+      });
     });
   }, []);
   return _react.default.createElement("div", null, _react.default.createElement("div", null, "Title: ", film.title), _react.default.createElement("div", null, "Episode: ", film.episode_id), _react.default.createElement("div", null, "Opening Crawl:", _react.default.createElement("br", null), film.opening_crawl), _react.default.createElement("div", null, "Director: ", film.director), _react.default.createElement("div", null, "Producer: ", film.producer), _react.default.createElement("div", null, "Release Date: ", film.release_date), _react.default.createElement("div", null, _react.default.createElement("h5", null, _react.default.createElement(_reactRouterDom.Link, {
@@ -35700,17 +35727,17 @@ var FilmDetails = function FilmDetails() {
         title: film.title
       }
     }
-  }, "Characters Features in ", film.title))), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Featured Planets: "), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: planets,
+  }, "Characters Features in ", film.title))), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Featured Planets: "), " ", planets.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: planets.data,
     path: _String.world_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Featured Species:"), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: species,
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Featured Species:"), " ", species.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: species.data,
     path: _String.specie_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Vehicles Featured:"), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: vehicles,
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Vehicles Featured:"), " ", vehicles.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: vehicles.data,
     path: _String.vehicle_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Starships Featured:"), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: starships,
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Starships Featured:"), " ", starships.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: starships.data,
     path: _String.starship_link
   })));
 };
@@ -35729,16 +35756,18 @@ var _react = _interopRequireDefault(require("react"));
 
 var _LinkBlock = _interopRequireDefault(require("./LinkBlock"));
 
+var _String = require("../strings/String");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Generates generic LinkBlock components using a List of film objects
 var FilmBlockList = function FilmBlockList(_ref) {
-  var dataList = _ref.dataList,
-      path = _ref.path;
+  var dataList = _ref.dataList;
   return dataList.length > 0 ? dataList.map(function (data, index) {
     return _react.default.createElement(_LinkBlock.default, {
       key: index,
       data: data,
-      path: path,
+      path: _String.film_link,
       name: data.title
     });
   }) : _react.default.createElement("div", null, "NA");
@@ -35746,7 +35775,7 @@ var FilmBlockList = function FilmBlockList(_ref) {
 
 var _default = FilmBlockList;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./LinkBlock":"common/LinkBlock.js"}],"components/CharacterDetails.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./LinkBlock":"common/LinkBlock.js","../strings/String":"strings/String.js"}],"components/CharacterDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35761,6 +35790,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _reactRouter = require("react-router");
 
 var _String = require("../strings/String");
+
+var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
 
 var _FilmBlockList = _interopRequireDefault(require("../common/FilmBlockList"));
 
@@ -35784,32 +35815,48 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// Organizes and displays character objects
 var CharacterDetails = function CharacterDetails() {
   var location = (0, _reactRouter.useLocation)();
   var toDisplay = location.state.toDisplay;
   var character = toDisplay;
 
-  var _useState = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState2 = _slicedToArray(_useState, 2),
       films = _useState2[0],
       setFilms = _useState2[1];
 
-  var _useState3 = (0, _react.useState)([]),
+  var _useState3 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState4 = _slicedToArray(_useState3, 2),
       homeworld = _useState4[0],
       setHomeword = _useState4[1];
 
-  var _useState5 = (0, _react.useState)([]),
+  var _useState5 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState6 = _slicedToArray(_useState5, 2),
       species = _useState6[0],
       setSpecies = _useState6[1];
 
-  var _useState7 = (0, _react.useState)([]),
+  var _useState7 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState8 = _slicedToArray(_useState7, 2),
       vehicles = _useState8[0],
       setVehicles = _useState8[1];
 
-  var _useState9 = (0, _react.useState)([]),
+  var _useState9 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState10 = _slicedToArray(_useState9, 2),
       starships = _useState10[0],
       setStarships = _useState10[1];
@@ -35829,55 +35876,69 @@ var CharacterDetails = function CharacterDetails() {
     });
 
     _axios.default.all(filmPromises).then(function (result) {
-      setFilms(result.map(function (film) {
-        return film.data;
-      }));
+      setFilms({
+        data: result.map(function (film) {
+          return film.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.all(speciePromises).then(function (result) {
-      setSpecies(result.map(function (specie) {
-        return specie.data;
-      }));
+      setSpecies({
+        data: result.map(function (specie) {
+          return specie.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.all(vehiclePromises).then(function (result) {
-      setVehicles(result.map(function (vehicle) {
-        return vehicle.data;
-      }));
+      setVehicles({
+        data: result.map(function (vehicle) {
+          return vehicle.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.all(starshipPromises).then(function (result) {
-      setStarships(result.map(function (starship) {
-        return starship.data;
-      }));
+      setStarships({
+        data: result.map(function (starship) {
+          return starship.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.get(character.homeworld).then(function (result) {
-      setHomeword(result.data);
+      setHomeword({
+        data: result.data,
+        loading: false
+      });
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", character.name), _react.default.createElement("div", null, "Birth Date: ", character.birth_year), _react.default.createElement("div", null, "Eye Color: ", character.eye_color), _react.default.createElement("div", null, "Gender: ", character.gender), _react.default.createElement("div", null, "Hair Colour: ", character.hair_color), _react.default.createElement("div", null, "Mass: ", character.mass), _react.default.createElement("div", null, "Skin Color: ", character.skin_color), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", _react.default.createElement(_FilmBlockList.default, {
-    dataList: films,
-    path: _String.film_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World: "), " ", _react.default.createElement(LinkBlock, {
-    data: homeworld,
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", character.name), _react.default.createElement("div", null, "Birth Date: ", character.birth_year), _react.default.createElement("div", null, "Eye Color: ", character.eye_color), _react.default.createElement("div", null, "Gender: ", character.gender), _react.default.createElement("div", null, "Hair Colour: ", character.hair_color), _react.default.createElement("div", null, "Mass: ", character.mass), _react.default.createElement("div", null, "Skin Color: ", character.skin_color), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_FilmBlockList.default, {
+    dataList: films.data
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World: "), " ", homeworld.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlock.default, {
+    data: homeworld.data,
     path: _String.world_link,
-    name: homeworld.name
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Species:"), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: species,
+    name: homeworld.data.name
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Species:"), " ", species.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: species.data,
     path: _String.specie_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Vehicles Piloted:"), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: vehicles,
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Vehicles Piloted:"), " ", vehicles.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: vehicles.data,
     path: _String.vehicle_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Starships Piloted:"), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: starships,
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Starships Piloted:"), " ", starships.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: starships.data,
     path: _String.starship_link
   })));
 };
 
 var _default = CharacterDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/FilmBlockList":"common/FilmBlockList.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/WorldDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/FilmBlockList":"common/FilmBlockList.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/WorldDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35915,46 +35976,58 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// Organizes and displays WorldDetails objects
 var WorldDetails = function WorldDetails() {
   var location = (0, _reactRouter.useLocation)();
   var toDisplay = location.state.toDisplay;
   var world = toDisplay;
 
-  var _useState = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState2 = _slicedToArray(_useState, 2),
       residents = _useState2[0],
       setResidents = _useState2[1];
 
-  var _useState3 = (0, _react.useState)([]),
+  var _useState3 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState4 = _slicedToArray(_useState3, 2),
       films = _useState4[0],
       setFilms = _useState4[1];
 
   (0, _react.useEffect)(function () {
-    var worldPromises = world.residents.map(function (resident) {
+    var residentPromises = world.residents.map(function (resident) {
       return _axios.default.get(resident);
     });
     var filmPromises = world.films.map(function (film) {
       return _axios.default.get(film);
     });
 
-    _axios.default.all(worldPromises).then(function (results) {
-      setResidents(results.map(function (resident) {
-        return resident.data;
-      }));
+    _axios.default.all(residentPromises).then(function (results) {
+      setResidents({
+        data: results.map(function (resident) {
+          return resident.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.all(filmPromises).then(function (results) {
-      setFilms(results.map(function (film) {
-        return film.data;
-      }));
+      setFilms({
+        data: results.map(function (film) {
+          return film.data;
+        }),
+        loading: false
+      });
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Planet: ", world.name), _react.default.createElement("div", null, "Climate: ", world.climate), _react.default.createElement("div", null, "Diameter: ", world.diameter), _react.default.createElement("div", null, "Rotation Period: ", world.rotation_period), _react.default.createElement("div", null, "Orbital Period: ", world.orbital_period), _react.default.createElement("div", null, "Terrain: ", world.terrain), _react.default.createElement("div", null, "Surface Water: ", world.surface_water), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", _react.default.createElement(_FilmBlockList.default, {
-    data: films,
-    path: _String.film_link
-  })), _react.default.createElement("div", null, "Population: ", world.population), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Residents:"), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: residents,
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Planet: ", world.name), _react.default.createElement("div", null, "Climate: ", world.climate), _react.default.createElement("div", null, "Diameter: ", world.diameter), _react.default.createElement("div", null, "Rotation Period: ", world.rotation_period), _react.default.createElement("div", null, "Orbital Period: ", world.orbital_period), _react.default.createElement("div", null, "Terrain: ", world.terrain), _react.default.createElement("div", null, "Surface Water: ", world.surface_water), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_FilmBlockList.default, {
+    dataList: films.data
+  })), _react.default.createElement("div", null, "Population: ", world.population), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Residents:"), " ", residents.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: residents.data,
     path: _String.character_link
   })));
 };
@@ -35977,6 +36050,8 @@ var _reactRouter = require("react-router");
 
 var _String = require("../strings/String");
 
+var _LinkBlock = _interopRequireDefault(require("../common/LinkBlock"));
+
 var _FilmBlockList = _interopRequireDefault(require("../common/FilmBlockList"));
 
 var _LinkBlockList = _interopRequireDefault(require("../common/LinkBlockList"));
@@ -35999,22 +36074,32 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// Organizes and displays Specie objects
 var SpecieDetails = function SpecieDetails() {
   var location = (0, _reactRouter.useLocation)();
   var toDisplay = location.state.toDisplay;
   var specie = toDisplay;
 
-  var _useState = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState2 = _slicedToArray(_useState, 2),
       films = _useState2[0],
       setFilms = _useState2[1];
 
-  var _useState3 = (0, _react.useState)([]),
+  var _useState3 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState4 = _slicedToArray(_useState3, 2),
       characters = _useState4[0],
       setCharacters = _useState4[1];
 
-  var _useState5 = (0, _react.useState)([]),
+  var _useState5 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState6 = _slicedToArray(_useState5, 2),
       homeworld = _useState6[0],
       setHomeworld = _useState6[1];
@@ -36028,37 +36113,46 @@ var SpecieDetails = function SpecieDetails() {
     });
 
     _axios.default.all(filmPromises).then(function (result) {
-      setFilms(result.map(function (film) {
-        return film.data;
-      }));
+      setFilms({
+        data: result.map(function (film) {
+          return film.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.all(characterPromises).then(function (result) {
-      setCharacters(result.map(function (character) {
-        return character.data;
-      }));
+      setCharacters({
+        data: result.map(function (character) {
+          return character.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.get(specie.homeworld).then(function (result) {
-      setHomeworld(result.data);
+      setHomeworld({
+        data: result.data,
+        loading: false
+      });
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Specie: ", specie.name), _react.default.createElement("div", null, "Average Height: ", specie.average_height), _react.default.createElement("div", null, "Average Lifespan: ", specie.average_lifespan), _react.default.createElement("div", null, "Classification: ", specie.classifcation), _react.default.createElement("div", null, "Designation: ", specie.designation), _react.default.createElement("div", null, "Possible Eye Colours: ", specie.eye_colors), _react.default.createElement("div", null, "Possible Skin Colours: ", specie.skin_colors), _react.default.createElement("div", null, "Language: ", specie.language), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances: "), " ", _react.default.createElement(_FilmBlockList.default, {
-    data: films,
-    path: _String.film_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World:"), " ", _react.default.createElement(LinkBlock, {
-    data: homeworld,
+  console.log(homeworld.data);
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Specie: ", specie.name), _react.default.createElement("div", null, "Average Height: ", specie.average_height), _react.default.createElement("div", null, "Average Lifespan: ", specie.average_lifespan), _react.default.createElement("div", null, "Classification: ", specie.classifcation), _react.default.createElement("div", null, "Designation: ", specie.designation), _react.default.createElement("div", null, "Possible Eye Colours: ", specie.eye_colors), _react.default.createElement("div", null, "Possible Skin Colours: ", specie.skin_colors), _react.default.createElement("div", null, "Language: ", specie.language), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances: "), " ", films.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_FilmBlockList.default, {
+    dataList: films.data
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Home World:"), " ", homeworld.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlock.default, {
+    data: homeworld.data,
     path: _String.world_link,
-    name: homeworld.name
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Members of Species:"), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: characters,
+    name: homeworld.data.name
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Members of Species:"), " ", characters.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: characters.data,
     path: _String.character_link
   })));
 };
 
 var _default = SpecieDetails;
 exports.default = _default;
-},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/FilmBlockList":"common/FilmBlockList.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/VehicleDetails.js":[function(require,module,exports) {
+},{"axios":"../node_modules/axios/index.js","react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","../strings/String":"strings/String.js","../common/LinkBlock":"common/LinkBlock.js","../common/FilmBlockList":"common/FilmBlockList.js","../common/LinkBlockList":"common/LinkBlockList.js"}],"components/VehicleDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36096,17 +36190,24 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// Organizes and displays Vehicle objects
 var VehicleDetails = function VehicleDetails() {
   var location = (0, _reactRouter.useLocation)();
   var toDisplay = location.state.toDisplay;
   var vehicle = toDisplay;
 
-  var _useState = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState2 = _slicedToArray(_useState, 2),
       pilots = _useState2[0],
       setPilots = _useState2[1];
 
-  var _useState3 = (0, _react.useState)([]),
+  var _useState3 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState4 = _slicedToArray(_useState3, 2),
       films = _useState4[0],
       setFilms = _useState4[1];
@@ -36120,23 +36221,28 @@ var VehicleDetails = function VehicleDetails() {
     });
 
     _axios.default.all(pilotPromises).then(function (results) {
-      setPilots(results.map(function (result) {
-        return result.data;
-      }));
+      setPilots({
+        data: results.map(function (result) {
+          return result.data;
+        }),
+        loading: false
+      });
     });
 
-    _axios.default.all(filmPromises).then(function (results) {
-      setFilms(results.map(function (result) {
-        return result.data;
-      }));
+    _axios.default.all(filmPromises).then(function (result) {
+      setFilms({
+        data: result.map(function (film) {
+          return film.data;
+        }),
+        loading: false
+      });
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", vehicle.name), _react.default.createElement("div", null, "Class: ", vehicle.vehicle_class), _react.default.createElement("div", null, "Model: ", vehicle.model), _react.default.createElement("div", null, "Passengers: ", vehicle.passengers), _react.default.createElement("div", null, "Cargo Capacity: ", vehicle.cargo_capacity), _react.default.createElement("div", null, "Crew: ", vehicle.crew), _react.default.createElement("div", null, "Cost In Credits: ", vehicle.cost_in_credits), _react.default.createElement("div", null, "Manufacturer: ", vehicle.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", vehicle.max_atmosphering_speed), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Known Pilots:"), " ", _react.default.createElement(_LinkBlockList.default, {
-    dataList: pilots,
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", vehicle.name), _react.default.createElement("div", null, "Class: ", vehicle.vehicle_class), _react.default.createElement("div", null, "Model: ", vehicle.model), _react.default.createElement("div", null, "Passengers: ", vehicle.passengers), _react.default.createElement("div", null, "Cargo Capacity: ", vehicle.cargo_capacity), _react.default.createElement("div", null, "Crew: ", vehicle.crew), _react.default.createElement("div", null, "Cost In Credits: ", vehicle.cost_in_credits), _react.default.createElement("div", null, "Manufacturer: ", vehicle.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", vehicle.max_atmosphering_speed), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Known Pilots:"), " ", pilots.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: pilots.data,
     path: _String.character_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", _react.default.createElement(_FilmBlockList.default, {
-    data: films,
-    path: _String.film_link
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.data == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_FilmBlockList.default, {
+    dataList: films.data
   })));
 };
 
@@ -36180,17 +36286,24 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// Organizes and displays Starship objects
 var StarshipDetails = function StarshipDetails() {
   var location = (0, _reactRouter.useLocation)();
   var toDisplay = location.state.toDisplay;
   var starship = toDisplay;
 
-  var _useState = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState2 = _slicedToArray(_useState, 2),
       pilots = _useState2[0],
       setPilots = _useState2[1];
 
-  var _useState3 = (0, _react.useState)([]),
+  var _useState3 = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState4 = _slicedToArray(_useState3, 2),
       films = _useState4[0],
       setFilms = _useState4[1];
@@ -36204,23 +36317,28 @@ var StarshipDetails = function StarshipDetails() {
     });
 
     _axios.default.all(pilotPromises).then(function (results) {
-      setPilots(results.map(function (result) {
-        return result.data;
-      }));
+      setPilots({
+        data: results.map(function (result) {
+          return result.data;
+        }),
+        loading: false
+      });
     });
 
     _axios.default.all(filmPromises).then(function (results) {
-      setFilms(results.map(function (result) {
-        return result.data;
-      }));
+      setFilms({
+        data: results.map(function (result) {
+          return result.data;
+        }),
+        loading: false
+      });
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", starship.name), _react.default.createElement("div", null, "Model: ", starship.model), _react.default.createElement("div", null, "Class: ", starship.starship_class), _react.default.createElement("div", null, "Crew: ", starship.crew), _react.default.createElement("div", null, "Cargo Capacity:", starship.cargo_capacity), _react.default.createElement("div", null, "Manufacturer: ", starship.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", starship.max_atmoshpering_speed), _react.default.createElement("div", null, "Length: ", starship.length), _react.default.createElement("div", null, "Passengers: ", starship.passengers), _react.default.createElement("div", null, "Cost in Credits: ", starship.cost_in_credits), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Known Pilots:"), " ", _react.default.createElement(_LinkBlockList.default, {
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, "Name: ", starship.name), _react.default.createElement("div", null, "Model: ", starship.model), _react.default.createElement("div", null, "Class: ", starship.starship_class), _react.default.createElement("div", null, "Crew: ", starship.crew), _react.default.createElement("div", null, "Cargo Capacity:", starship.cargo_capacity), _react.default.createElement("div", null, "Manufacturer: ", starship.manufacturer), _react.default.createElement("div", null, "Max Atmosphering Speed: ", starship.max_atmoshpering_speed), _react.default.createElement("div", null, "Length: ", starship.length), _react.default.createElement("div", null, "Passengers: ", starship.passengers), _react.default.createElement("div", null, "Cost in Credits: ", starship.cost_in_credits), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Known Pilots:"), " ", pilots.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
     dataList: pilots,
     path: _String.character_link
-  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", _react.default.createElement(_FilmBlockList.default, {
-    data: films,
-    path: _String.film_link
+  })), _react.default.createElement("div", null, _react.default.createElement("h5", null, "Film Appearances:"), " ", films.data == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_FilmBlockList.default, {
+    dataList: films
   })));
 };
 
@@ -36262,13 +36380,17 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// Displays all characters that appear in a certain film
 var FilmCharacters = function FilmCharacters() {
   var location = (0, _reactRouter.useLocation)();
   var _location$state = location.state,
       characters = _location$state.characters,
       title = _location$state.title;
 
-  var _useState = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)({
+    loading: true,
+    data: []
+  }),
       _useState2 = _slicedToArray(_useState, 2),
       names = _useState2[0],
       setNames = _useState2[1];
@@ -36279,13 +36401,16 @@ var FilmCharacters = function FilmCharacters() {
     });
 
     _axios.default.all(characterPromises).then(function (result) {
-      setNames(result.map(function (char) {
-        return char.data;
-      }));
+      setNames({
+        data: result.map(function (char) {
+          return char.data;
+        }),
+        loading: false
+      });
     });
   }, []);
-  return _react.default.createElement("div", null, _react.default.createElement("h5", null, "Character Featured in ", title, ":"), _react.default.createElement("br", null), _react.default.createElement(_LinkBlockList.default, {
-    dataList: names,
+  return _react.default.createElement("div", null, _react.default.createElement("h5", null, "Character Featured in ", title, ":"), _react.default.createElement("br", null), names.loading == true ? _react.default.createElement("div", null, "Loading") : _react.default.createElement(_LinkBlockList.default, {
+    dataList: names.data,
     path: _String.character_link
   }));
 };
@@ -36326,6 +36451,9 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// Fetches and displays current films in SWAPI
+// Search bar continually updates query, which triggers the useEffect to perform a fetch using
+// SWAPI's own search query end point and displays results back on screen
 var FilmDisplay = function FilmDisplay() {
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -36402,10 +36530,11 @@ var _FilmDisplay = _interopRequireDefault(require("./FilmDisplay"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Driver for the App
 var App = function App() {
   return _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_reactRouterDom.Link, {
     to: "/"
-  }, _react.default.createElement("p", null, "Star Wars!")), _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
+  }, _react.default.createElement("p", null, "Star Wars!")), _react.default.createElement(_reactRouterDom.Switch, null, " ", _react.default.createElement(_reactRouterDom.Route, {
     path: _String.film_character_link,
     children: _react.default.createElement(_FilmCharacters.default, null)
   }), _react.default.createElement(_reactRouterDom.Route, {
@@ -36461,7 +36590,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49698" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65436" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -15,11 +15,11 @@ const CharacterDetails = () => {
     const { toDisplay } = location.state;
     const character = toDisplay;
 
-    const [films, setFilms] = useState([]);
-    const [homeworld, setHomeword] = useState([]);
-    const [species, setSpecies] = useState([]);
-    const [vehicles, setVehicles] = useState([]);
-    const [starships, setStarships] = useState([]);
+    const [films, setFilms] = useState({loading: true, data: []});
+    const [homeworld, setHomeword] = useState({loading: true, data: []});
+    const [species, setSpecies] = useState({loading: true, data: []});
+    const [vehicles, setVehicles] = useState({loading: true, data: []});
+    const [starships, setStarships] = useState({loading: true, data: []});
 
     useEffect(() => {
         let filmPromises = character.films.map((film) => {
@@ -39,31 +39,46 @@ const CharacterDetails = () => {
         });
 
         axios.all(filmPromises).then((result) => {
-            setFilms(result.map((film) => {
-                return film.data;
-            }));
+            setFilms({
+                data: result.map((film) => {
+                    return film.data;
+                }),
+                loading: false
+            });
         });
 
         axios.all(speciePromises).then((result) => {
-            setSpecies(result.map((specie) => {
-                return specie.data;
-            }));
+            setSpecies({
+                data: result.map((specie) => {
+                    return specie.data;
+                }),
+                loading: false
+            });
         });
 
         axios.all(vehiclePromises).then((result) => {
-            setVehicles(result.map((vehicle) => {
-                return vehicle.data;
-            }));
+            setVehicles({
+                data: result.map((vehicle) => {
+                    return vehicle.data;
+                }),
+                loading: false
+            });
         });
 
         axios.all(starshipPromises).then((result) => {
-            setStarships(result.map((starship) => {
-                return starship.data;
-            }));
+            setStarships({
+                data: result.map((starship) => {
+                    return starship.data;
+                }),
+                loading: false
+            });
         });
 
         axios.get(character.homeworld).then((result) => {
-            setHomeword(result.data);
+            setHomeword({
+                data: result.data,
+                loading: false
+            });
         });
 
     }, []);
@@ -92,19 +107,19 @@ const CharacterDetails = () => {
                 Skin Color: {character.skin_color}
             </div>
             <div>
-                <h5>Film Appearances:</h5> <FilmBlockList dataList={films} />
+                <h5>Film Appearances:</h5> {films.loading == true ? (<div>Loading</div>) : (<FilmBlockList dataList={films.data} />)}
             </div>
             <div>
-                <h5>Home World: </h5> <LinkBlock data={homeworld} path={world_link} name={homeworld.name} />
+                <h5>Home World: </h5> {homeworld.loading == true ? (<div>Loading</div>) : (<LinkBlock data={homeworld.data} path={world_link} name={homeworld.data.name} />)}
             </div>
             <div>
-                <h5>Species:</h5> <LinkBlockList dataList={species} path={specie_link} />
+                <h5>Species:</h5> {species.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={species.data} path={specie_link} />)}
             </div>
             <div>
-                <h5>Vehicles Piloted:</h5> <LinkBlockList dataList={vehicles} path={vehicle_link} />
+                <h5>Vehicles Piloted:</h5> {vehicles.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={vehicles.data} path={vehicle_link} />)}
             </div>
             <div>
-                <h5>Starships Piloted:</h5> <LinkBlockList dataList={starships} path={starship_link} />
+                <h5>Starships Piloted:</h5> {starships.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={starships.data} path={starship_link} />)}
             </div>
         </div>
     )

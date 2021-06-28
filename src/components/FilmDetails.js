@@ -10,10 +10,10 @@ import LinkBlockList from "../common/LinkBlockList";
 // Organizes and displays film objects
 const FilmDetails = () => {
 
-    const [planets, setPlanets] = useState([]);
-    const [species, setSpecies] = useState([]);
-    const [vehicles, setVehicles] = useState([]);
-    const [starships, setStarships] = useState([]);
+    const [planets, setPlanets] = useState({loading: true, data: []});
+    const [species, setSpecies] = useState({loading: true, data: []});
+    const [vehicles, setVehicles] = useState({loading: true, data: []});
+    const [starships, setStarships] = useState({loading: true, data: []});
     
     const location = useLocation();
     const { toDisplay } = location.state;
@@ -38,27 +38,39 @@ const FilmDetails = () => {
         });
 
         axios.all(worldPromises).then((result) => {
-            setPlanets(result.map((planet) => {
-                return planet.data;
-            }));
+            setPlanets({
+                data: result.map((planet) => {
+                    return planet.data;
+                }),
+                loading: false
+            });
         });
 
         axios.all(speciePromises).then((result) => {
-            setSpecies(result.map((specie) => {
-                return specie.data;
-            }));
+            setSpecies({
+                data: result.map((specie) => {
+                    return specie.data;
+                }),
+                loading: false
+            });
         });
 
         axios.all(vehiclePromises).then((result) => {
-            setVehicles(result.map((vehicle) => {
-                return vehicle.data;
-            }));
+            setVehicles({
+                data: result.map((vehicle) => {
+                    return vehicle.data;
+                }),
+                loading: false
+            });
         });
 
         axios.all(starshipPromises).then((result) => {
-            setStarships(result.map((starship) => {
-                return starship.data;
-            }));
+            setStarships({
+                data: result.map((starship) => {
+                    return starship.data;
+                }),
+                loading: false
+            });
         });
     }, []);
 
@@ -94,16 +106,16 @@ const FilmDetails = () => {
                 }}>Characters Features in {film.title}</Link></h5>
             </div>
             <div>
-                <h5>Featured Planets: </h5> <LinkBlockList dataList={planets} path={world_link}/> 
+                <h5>Featured Planets: </h5> {planets.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={planets.data} path={world_link}/>)}
             </div>
             <div>
-                <h5>Featured Species:</h5> <LinkBlockList dataList={species} path={specie_link} />
+                <h5>Featured Species:</h5> {species.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={species.data} path={specie_link} />)}
             </div>
             <div>
-                <h5>Vehicles Featured:</h5> <LinkBlockList dataList={vehicles} path={vehicle_link} />
+                <h5>Vehicles Featured:</h5> {vehicles.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={vehicles.data} path={vehicle_link} />)}
             </div>
             <div>
-                <h5>Starships Featured:</h5> <LinkBlockList dataList={starships} path={starship_link} />
+                <h5>Starships Featured:</h5> {starships.loading == true ? (<div>Loading</div>) : (<LinkBlockList dataList={starships.data} path={starship_link} />)}
             </div>
         </div>
     )
